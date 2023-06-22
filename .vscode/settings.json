@@ -1,0 +1,8 @@
+{
+  "python.formatting.provider": "none",
+  "css.validate": false,
+  "tailwindCSS.emmetCompletions": true,
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.black-formatter"
+  }
+}
