@@ -3,7 +3,68 @@
 {% block title %}Home {% endblock title %}
 
 {% block main %}
+<!-- Header Area -->
+<header class="h-screen bg-no-repeat bg-cover" style="background-image: url('{% static 'images/bg.jpg' %}');">
+    <div class="w-full h-full backdrop-brightness-[.85]">
+        <!-- Navbar Area -->
+        <div class="navbar w-4/5 mx-auto bg-transparent text-neutral-900">
+            <div class="navbar-start">
+            <div class="dropdown">
+                <label tabindex="0" class="btn btn-ghost lg:hidden">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" /></svg>
+                </label>
+                <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-transparent rounded-box w-52">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Tour</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+            <a class="text-xl font-bold sm:ml-2 lg:text-3xl text-indigo-600" href="#">Travel Agency</a>
+            </div>
+            <div class="navbar-end hidden lg:flex">
+            <ul class="menu menu-horizontal font-semibold text-xl">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Tour</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+            </div>
+            <div class="navbar-end lg:w-1/5">
+            <a class="custom-btn text-white font-semibold text-md" href="#">Sign Up</a>
+            </div>
+        </div>
 
-<p class="text-sky-700 text-2xl font-semibold">This is Travel Agency Project!</p>
+        <div class="text-center text-white pt-40 leading-7">
+            <span class="font-bold text-2xl lg:text-5xl uppercase">Never Stop <br> Exploring The World</span>
+        </div>
+
+        <div class="bg-white px-6 py-4 rounded-md w-full max-w-4xl mx-auto my-20 flex justify-between items-center divide-x-2 divide-gray-400 text-neutral-600 ">
+            <div>
+                <h3 class="text-xl font-semibold">Location</h3>
+                <span class="text-md">Where are you going!</span>
+            </div>
+            <div class="pl-6">
+                <h3 class="text-xl font-semibold">Check In</h3>
+                <span class="text-md">Adds Dates</span>
+            </div>
+            <div class="pl-6">
+                <h3 class="text-xl font-semibold">Check Out</h3>
+                <span class="text-md">Adds Dates</span>
+            </div>
+            <div class="pl-6">
+                <h3 class="text-xl font-semibold">Guest</h3>
+                <span class="text-md">Number or Peoples</span>
+            </div>
+            <div class="bg-indigo-800 rounded-md px-2 py-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search text-white" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                    <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path>
+                    <path d="M21 21l-6 -6"></path>
+                 </svg>
+            </div>
+        </div>
+    </div>
+</header>
 
 {% endblock main %}
