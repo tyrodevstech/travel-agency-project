@@ -1,8 +1,8 @@
 from django.apps import AppConfig
 
 
-class AppMainConfig(AppConfig):
+class AppFlightConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'app_main'
+    name = 'app_flight'
 
-    verbose_name = "App Main"
+    verbose_name = 'App Flight'
