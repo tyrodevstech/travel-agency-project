@@ -44,6 +44,7 @@ DEFAULT_APPS = [
 PROJECT_APP = [
     "app_main",
     "app_flight",
+    "app_tour",
 ]
 
 INSTALLED_APPS = DEFAULT_APPS + PROJECT_APP

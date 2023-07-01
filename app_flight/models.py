@@ -4,7 +4,7 @@ from django_countries.fields import CountryField
 # Create your models here.
 class AirportModel(models.Model):
     city = models.CharField(max_length=122, null=True)
-    country = models.CharField(max_length=122, null=True)
+    country = CountryField()
     airport = models.CharField(max_length=122, null=True)
     code = models.CharField(max_length=3, null=True)
 
@@ -65,14 +65,14 @@ class AirPlaneTicketModel(models.Model):
     airplane = models.ForeignKey(AirplaneModel, on_delete=models.CASCADE, null=True)
     discount = models.ForeignKey(DiscountModel, on_delete=models.CASCADE, null=True, blank=True)
     flight_type =  models.CharField(max_length=122, choices=FLGHT_TYPE_CHOICES, null=True, default='Economy')
-    base_adult_fare = models.FloatField(null=True)
-    base_child_fare = models.FloatField(null=True)
-    base_infant_fare = models.FloatField(null=True)
-    adult_tax = models.FloatField(null=True)
-    child_tax = models.FloatField(null=True)
-    infant_tax = models.FloatField(null=True)
-    baggage_cabin = models.FloatField(null=True)
-    baggage_checkin = models.FloatField(null=True)
+    base_adult_fare = models.FloatField(null=True, blank=True)
+    base_child_fare = models.FloatField(null=True, blank=True)
+    base_infant_fare = models.FloatField(null=True, blank=True)
+    adult_tax = models.FloatField(null=True, blank=True)
+    child_tax = models.FloatField(null=True, blank=True)
+    infant_tax = models.FloatField(null=True, blank=True)
+    baggage_cabin = models.FloatField(null=True, blank=True, verbose_name="Baggage KG (cabin)")
+    baggage_checkin = models.FloatField(null=True, blank=True, verbose_name="Baggage KG (check-in)")
 
     location_from = models.ForeignKey(AirportModel, on_delete=models.CASCADE, null=True, related_name="location_from")
     location_to = models.ForeignKey(AirportModel, on_delete=models.CASCADE, null=True, related_name="location_to")
@@ -81,7 +81,7 @@ class AirPlaneTicketModel(models.Model):
     end_date = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"{self.id}- {self.airplane} ({self.flight_type})"
+        return f"{self.id}- {self.airplane.airplane_name} ({self.flight_type})"
 
     class Meta:
         verbose_name = "AirPlane Ticket"
