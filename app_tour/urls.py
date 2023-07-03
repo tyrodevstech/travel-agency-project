@@ -5,5 +5,5 @@ app_name = "app_tour"
 
 
 urlpatterns = [
-
+    path("tour-home/", TourIndexView.as_view(), name="tour_home"),
 ]
