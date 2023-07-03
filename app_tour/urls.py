@@ -5,5 +5,6 @@ app_name = "app_tour"
 
 
 urlpatterns = [
-    path("tour-home/", TourIndexView.as_view(), name="tour_home"),
+    path("tour-list/", TourIndexView.as_view(), name="tour_list"),
+    path("tour-details/", TourDetailsView.as_view(), name="tour_details"),
 ]

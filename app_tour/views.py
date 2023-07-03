@@ -4,3 +4,7 @@ from django.views.generic import ListView, TemplateView
 # Create your views here.
 class TourIndexView(TemplateView):
     template_name = "app_tour/index.html"
+
+
+class TourDetailsView(TemplateView):
+    template_name = "app_tour/details.html"
