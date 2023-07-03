@@ -1,0 +1,18 @@
+{% extends 'app_main/base.html' %}
+{% load static %}
+{% block title %}Home {% endblock title %}
+
+{% block main %}
+<section class="container py-6">
+    <div class="flex">
+        {% include 'app_main/partials/filter.html' %}
+
+        <div class="flex-1">
+            <!-- component -->
+            {% include 'app_main/partials/ticket.html' %}
+            {% include 'app_main/partials/ticket.html' %}
+        </div>
+    </div>
+</section>
+
+{% endblock main %}

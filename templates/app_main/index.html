@@ -7,61 +7,122 @@
 <header class="h-screen bg-no-repeat bg-cover" style="background-image: url('{% static 'images/bg.jpg' %}');">
     <div class="w-full h-full backdrop-brightness-[.85]">
         <!-- Navbar Area -->
-        <div class="navbar w-4/5 mx-auto bg-transparent text-neutral-900">
+        <div class="navbar w-4/5 mx-auto bg-transparent text-neutral-900 fixed top-0 left-0 right-0">
             <div class="navbar-start">
-            <div class="dropdown">
-                <label tabindex="0" class="btn btn-ghost lg:hidden">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" /></svg>
-                </label>
-                <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-transparent rounded-box w-52">
+                <div class="dropdown">
+                    <label tabindex="0" class="btn btn-ghost lg:hidden">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h8m-8 6h16" />
+                        </svg>
+                    </label>
+                    <ul tabindex="0"
+                        class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-transparent rounded-box w-52">
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Tour</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <a class="text-xl font-bold sm:ml-2 lg:text-3xl text-indigo-600" href="#">Travel Agency</a>
+            </div>
+            <div class="navbar-end hidden lg:flex">
+                <ul class="menu menu-horizontal font-semibold text-xl">
                     <li><a href="#">Home</a></li>
                     <li><a href="#">About Us</a></li>
                     <li><a href="#">Tour</a></li>
                     <li><a href="#">Contact</a></li>
                 </ul>
             </div>
-            <a class="text-xl font-bold sm:ml-2 lg:text-3xl text-indigo-600" href="#">Travel Agency</a>
-            </div>
-            <div class="navbar-end hidden lg:flex">
-            <ul class="menu menu-horizontal font-semibold text-xl">
-                <li><a href="#">Home</a></li>
-                <li><a href="#">About Us</a></li>
-                <li><a href="#">Tour</a></li>
-                <li><a href="#">Contact</a></li>
-            </ul>
-            </div>
             <div class="navbar-end lg:w-1/5">
-            <a class="custom-btn text-white font-semibold text-md" href="#">Sign Up</a>
+                <a class="custom-btn text-white font-semibold text-md" href="#">Sign Up</a>
             </div>
         </div>
 
-        <div class="text-center text-white pt-40 leading-7">
-            <span class="font-bold text-2xl lg:text-5xl uppercase">Never Stop <br> Exploring The World</span>
-        </div>
+        <div class="flex h-full w-full flex-col items-center flex-1 justify-center">
+            <div class="text-center text-white leading-7">
+                <span class="font-bold text-2xl lg:text-5xl uppercase">Never Stop <br> Exploring The World</span>
+            </div>
 
-        <div class="bg-white px-6 py-4 rounded-md w-full max-w-4xl mx-auto my-20 flex justify-between items-center divide-x-2 divide-gray-400 text-neutral-600 ">
-            <div>
-                <h3 class="text-xl font-semibold">Location</h3>
-                <span class="text-md">Where are you going!</span>
-            </div>
-            <div class="pl-6">
-                <h3 class="text-xl font-semibold">Check In</h3>
-                <span class="text-md">Adds Dates</span>
-            </div>
-            <div class="pl-6">
-                <h3 class="text-xl font-semibold">Check Out</h3>
-                <span class="text-md">Adds Dates</span>
-            </div>
-            <div class="pl-6">
-                <h3 class="text-xl font-semibold">Guest</h3>
-                <span class="text-md">Number or Peoples</span>
-            </div>
-            <div class="bg-indigo-800 rounded-md px-2 py-2">
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search text-white" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                    <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path>
-                    <path d="M21 21l-6 -6"></path>
-                 </svg>
+            <div
+                class="bg-white px-6 py-4 rounded-md w-full max-w-6xl mx-auto my-20 flex justify-between items-center divide-x divide-gray-300 text-neutral-700 gap-4 ">
+                <div class="flex items-center">
+                    <div>
+                        <select id="countries"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                            <option selected>Choose a country</option>
+                            <option value="US">United States</option>
+                            <option value="CA">Canada</option>
+                            <option value="FR">France</option>
+                            <option value="DE">Germany</option>
+                        </select>
+                    </div>
+                    <span class="mx-4 text-gray-500">to</span>
+                    <div>
+                        <select id="countries"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                            <option selected>Choose a country</option>
+                            <option value="US">United States</option>
+                            <option value="CA">Canada</option>
+                            <option value="FR">France</option>
+                            <option value="DE">Germany</option>
+                        </select>
+                    </div>
+                </div>
+                <div date-rangepicker class="flex items-center pl-4">
+                    <div class="relative">
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                                <svg aria-hidden="true" class="w-5 h-5 text-gray-500 dark:text-gray-400"
+                                    fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                        d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
+                            </div>
+                            <input name="start" type="text"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                placeholder="Select departure date">
+                        </div>
+                    </div>
+                    <span class="mx-4 text-gray-500">to</span>
+                    <div class="relative">
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                                <svg aria-hidden="true" class="w-5 h-5 text-gray-500 dark:text-gray-400"
+                                    fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                        d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
+                            </div>
+                            <input name="end" type="text"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                placeholder="Select Return date">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pl-4">
+                    <div>
+                        <input type="text" id="first_name"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            placeholder="John" required>
+                    </div>
+                    <!-- <h3 class="text-xl font-semibold">Traveler, Class</h3>
+                    <span class="text-md">! Traveler</span>
+                    <span class="text-md">Economy</span> -->
+                </div>
+                <div class="bg-indigo-800 rounded-md px-2 py-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search text-white"
+                        width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                        <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path>
+                        <path d="M21 21l-6 -6"></path>
+                    </svg>
+                </div>
             </div>
         </div>
     </div>
