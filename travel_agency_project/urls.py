@@ -24,6 +24,8 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("", include("app_main.urls", "app_main")),
+    path("flight/", include("app_flight.urls", "app_flight")),
+    path("tour/", include("app_tour.urls", "app_tour")),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

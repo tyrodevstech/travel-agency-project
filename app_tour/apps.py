@@ -1,8 +1,8 @@
 from django.apps import AppConfig
 
 
-class AppMainConfig(AppConfig):
+class AppTourConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'app_main'
+    name = 'app_tour'
 
-    verbose_name = "App Main"
+    verbose_name = 'App Tour'

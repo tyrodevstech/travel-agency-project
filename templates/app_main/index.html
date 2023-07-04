@@ -1,4 +1,4 @@
-{% extends 'app_main/base.html' %}
+{% extends 'base.html' %}
 {% load static %}
 {% block title %}Home {% endblock title %}
 
@@ -16,7 +16,7 @@
                 <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-transparent rounded-box w-52">
                     <li><a href="#">Home</a></li>
                     <li><a href="#">About Us</a></li>
-                    <li><a href="#">Tour</a></li>
+                    <li><a href="{% url 'app_tour:tour_list' %}">Tour</a></li>
                     <li><a href="#">Contact</a></li>
                 </ul>
             </div>
@@ -26,7 +26,7 @@
             <ul class="menu menu-horizontal font-semibold text-xl">
                 <li><a href="#">Home</a></li>
                 <li><a href="#">About Us</a></li>
-                <li><a href="#">Tour</a></li>
+                <li><a href="{% url 'app_tour:tour_list' %}">Tour</a></li>
                 <li><a href="#">Contact</a></li>
             </ul>
             </div>

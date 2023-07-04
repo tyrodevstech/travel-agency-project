@@ -38,10 +38,13 @@ DEFAULT_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_countries',
 ]
 
 PROJECT_APP = [
     "app_main",
+    "app_flight",
+    "app_tour",
 ]
 
 INSTALLED_APPS = DEFAULT_APPS + PROJECT_APP
