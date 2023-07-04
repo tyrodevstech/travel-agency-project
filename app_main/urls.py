@@ -6,6 +6,7 @@ app_name = "app_main"
 
 urlpatterns = [
     path("", index_view, name="home"),
+    path("search/", search_view, name="search"),
 ]
 
 

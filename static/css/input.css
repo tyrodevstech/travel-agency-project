@@ -6,3 +6,12 @@
 .custom-btn{
     @apply py-2 px-4 bg-indigo-600 outline-none rounded-md hover:bg-indigo-800
 }
+nav{
+    @apply bg-white border-gray-200 dark:bg-gray-900 sticky top-0 inset-x-0 w-full z-50 transition-all duration-500;
+}
+nav.home{
+    @apply bg-transparent fixed text-white;
+}
+nav.scrolled{
+    @apply bg-white shadow text-neutral-900;
+}
