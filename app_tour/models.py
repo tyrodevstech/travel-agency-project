@@ -1,4 +1,5 @@
 from django.db import models
+from django_countries.fields import CountryField
 
 # Create your models here.
 class TourLocationModel(models.Model):
@@ -17,25 +18,26 @@ class TourLocationModel(models.Model):
         ]
 
 class TourPackageModel(models.Model):
-    package_title = models.CharField(max_length=225, null=True)
-    overview = models.TextField(max_length=755, null=True)
-    duration = models.IntegerField(null=True, blank=True)
-    requirements = models.TextField(max_length=755, null=True)
-    location = models.CharField(max_length=122, null=True)
-    timing = models.CharField(max_length=122, null=True)
-    description = models.TextField(max_length=755, null=True)
-    additional_information = models.TextField(max_length=755, null=True)
-    travel_tips = models.TextField(max_length=755, null=True)
-    policy = models.TextField(max_length=755, null=True)
+    package_title = models.CharField(max_length=525, null=True)
+    tour_location = models.ForeignKey(TourLocationModel, on_delete=models.CASCADE, null=True, blank=True)
+    district = models.CharField(max_length=122, null=True)
+    country = CountryField()
+    tour_duration = models.IntegerField(null=True, blank=True)
+    peoples_limit = models.PositiveIntegerField(default=1, null=True, blank=True)
 
-    adult_traveler = models.IntegerField(null=True, default=1)
-    child_traveler = models.IntegerField(null=True, blank=True)
-    infant_traveler = models.IntegerField(null=True, blank=True)
+    details = models.TextField(max_length=2055, null=True)
+    options = models.TextField(max_length=2055, null=True)
+    policy = models.TextField(max_length=2055, null=True)
+
+    adult_traveler = models.PositiveIntegerField(null=True, default=1)
+    child_traveler = models.PositiveIntegerField(null=True, blank=True)
+    infant_traveler = models.PositiveIntegerField(null=True, blank=True)
 
     journey_date = models.DateTimeField()
-    package_price = models.FloatField(null=True, blank=True)
 
+    package_price = models.FloatField(null=True, blank=True)
     discount = models.ForeignKey("app_flight.DiscountModel", on_delete=models.CASCADE, null=True, blank=True)
+
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

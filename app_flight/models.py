@@ -45,7 +45,7 @@ class DiscountModel(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.id}- {self.amount} % [{self.created_at}]"
+        return f"{self.amount}% | {self.discount_name}"
 
     class Meta:
         verbose_name = "Discount"
