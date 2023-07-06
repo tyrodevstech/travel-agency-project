@@ -61,73 +61,57 @@
             </div>
         </div>
 
-        <hr class="bg-gray-200 w-full md:my-6 my-3" />
+            <hr class="bg-gray-200 w-full md:my-6 my-3" />
 
-        <!-- Material Section -->
-        <div>
-            <p class="lg:text-lg text-base font-medium mb-2">Schedule</p>
-            <ul class="flex flex-wrap justify-center items-center gap-3">
-                <li class="relative flex-1">
-                    <input class="sr-only peer" type="checkbox" value="day" name="schedule" id="schedule_day">
-                    <label
-                        class="flex flex-col justify-center items-center p-4 bg-white border border-gray-300 rounded-lg cursor-pointer focus:outline-none hover:bg-gray-50 peer-checked:ring-gray-500 peer-checked:ring-2 peer-checked:border-transparent"
-                        for="schedule_day">
-                        <i class="ti ti-sunrise text-4xl"></i>
-                        <span class="text-xs font-medium">Day</span>
-                        <span class="text-xs text-gray-600">00.00 - 11:59</span>
-                    </label>
-                </li>
-                <li class="relative flex-1">
-                    <input class="sr-only peer" type="checkbox" value="night" name="schedule" id="schedule_night">
-                    <label
-                        class="flex flex-col justify-center items-center p-4 bg-white border border-gray-300 rounded-lg cursor-pointer focus:outline-none hover:bg-gray-50 peer-checked:ring-gray-500 peer-checked:ring-2 peer-checked:border-transparent"
-                        for="schedule_night">
-                        <i class="ti ti-sunset text-4xl"></i>
-                        <span class="text-xs font-medium">Night</span>
-                        <span class="text-xs text-gray-600">12.00 - 23:59</span>
-                    </label>
-                </li>
-            </ul>
-        </div>
+            <!-- Material Section -->
+            <div>
+                <p class="lg:text-lg text-base font-medium mb-2">Schedule</p>
+                <ul class="flex flex-wrap justify-center items-center gap-3">
+                    <li class="relative flex-1">
+                        <input class="sr-only peer" type="checkbox" value="day" name="schedule" id="schedule_day">
+                        <label
+                            class="flex flex-col justify-center items-center p-4 bg-white border border-gray-300 rounded-lg cursor-pointer focus:outline-none hover:bg-gray-50 peer-checked:ring-gray-500 peer-checked:ring-2 peer-checked:border-transparent"
+                            for="schedule_day">
+                            <i class="ti ti-sunrise text-4xl"></i>
+                            <span class="text-xs font-medium">Day</span>
+                            <span class="text-xs text-gray-600">00.00 - 11:59</span>
+                        </label>
+                    </li>
+                    <li class="relative flex-1">
+                        <input class="sr-only peer" type="checkbox" value="night" name="schedule" id="schedule_night">
+                        <label
+                            class="flex flex-col justify-center items-center p-4 bg-white border border-gray-300 rounded-lg cursor-pointer focus:outline-none hover:bg-gray-50 peer-checked:ring-gray-500 peer-checked:ring-2 peer-checked:border-transparent"
+                            for="schedule_night">
+                            <i class="ti ti-sunset text-4xl"></i>
+                            <span class="text-xs font-medium">Night</span>
+                            <span class="text-xs text-gray-600">12.00 - 23:59</span>
+                        </label>
+                    </li>
+                </ul>
+            </div>
 
-        <hr class="bg-gray-200 w-full md:my-8 my-4" />
+            <hr class="bg-gray-200 w-full md:my-8 my-4" />
 
-        <!-- Size Section -->
-        <div>
-            <p class="lg:text-lg text-base font-medium mb-2">Airlines</p>
-            <div class="grid grid-cols-2 gap-3">
-                <div class="flex items-center">
-                    <input class="w-4 h-4 mr-2" type="checkbox" id="Large" name="Large" value="Large" />
-                    <label class="text-sm leading-3 font-normal text-gray-600 dark:text-gray-300"
-                        for="Large">Large</label>
+            <!-- Size Section -->
+            <div>
+                <p class="lg:text-lg text-base font-medium mb-2">Airlines</p>
+                <div class="grid grid-cols-2 gap-3">
+                    <div class="flex items-center">
+                        <input class="w-4 h-4 mr-2" type="checkbox" id="Large" name="airplane__airplane_name" value="US Bangla" />
+                        <label class="text-sm leading-3 font-normal text-gray-600 dark:text-gray-300"
+                            for="Large">US Bangla</label>
 
-                </div>
-                <div class="flex items-center">
-                    <input class="w-4 h-4 mr-2" type="checkbox" id="Large" name="Large" value="Large" />
-                    <label class="text-sm leading-3 font-normal text-gray-600 dark:text-gray-300"
-                        for="Large">Large</label>
-
-                </div>
-                <div class="flex items-center">
-                    <input class="w-4 h-4 mr-2" type="checkbox" id="Large" name="Large" value="Large" />
-                    <label class="text-sm leading-3 font-normal text-gray-600 dark:text-gray-300"
-                        for="Large">Large</label>
-
-                </div>
-                <div class="flex items-center">
-                    <input class="w-4 h-4 mr-2" type="checkbox" id="Large" name="Large" value="Large" />
-                    <label class="text-sm leading-3 font-normal text-gray-600 dark:text-gray-300"
-                        for="Large">Large</label>
-
+                    </div>
+                    
                 </div>
             </div>
-        </div>
 
-        <div class="block w-full mt-10">
-            <button onclick="applyFilters()"
-                class="w-full hover:bg-gray-700 dark:hover:bg-gray-100 focus:ring focus:ring-offset-2 focus:ring-gray-800 text-base leading-4 font-medium py-3 rounded px-4 text-white bg-gray-800">Apply
-                Filter</button>
-        </div>
+            <div class="block w-full mt-10">
+                <button type="submit"
+                    class="w-full hover:bg-gray-700 dark:hover:bg-gray-100 focus:ring focus:ring-offset-2 focus:ring-gray-800 text-base leading-4 font-medium py-3 rounded px-4 text-white bg-gray-800">Apply
+                    Filter</button>
+            </div>
+        </form>
     </div>
 </div>
 

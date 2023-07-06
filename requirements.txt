@@ -2,6 +2,9 @@ asgiref==3.7.2
 autopep8==2.0.2
 backports.zoneinfo==0.2.1
 Django==4.2.2
+django-countries==7.5.1
+django-filter==23.2
+Pillow==9.5.0
 pycodestyle==2.10.0
 sqlparse==0.4.4
 tomli==2.0.1
