@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 from django_countries.fields import CountryField
 
 # Create your models here.
@@ -65,6 +66,7 @@ class AirPlaneTicketModel(models.Model):
     airplane = models.ForeignKey(AirplaneModel, on_delete=models.CASCADE, null=True)
     discount = models.ForeignKey(DiscountModel, on_delete=models.CASCADE, null=True, blank=True)
     flight_type =  models.CharField(max_length=122, choices=FLGHT_TYPE_CHOICES, null=True, default='Economy')
+    duration = models.CharField(max_length=25, null=True, blank=True)
     base_adult_fare = models.FloatField(null=True, blank=True)
     base_child_fare = models.FloatField(null=True, blank=True)
     base_infant_fare = models.FloatField(null=True, blank=True)
@@ -77,11 +79,16 @@ class AirPlaneTicketModel(models.Model):
     location_from = models.ForeignKey(AirportModel, on_delete=models.CASCADE, null=True, related_name="location_from")
     location_to = models.ForeignKey(AirportModel, on_delete=models.CASCADE, null=True, related_name="location_to")
 
-    start_date = models.DateTimeField(auto_now=True)
-    end_date = models.DateTimeField(auto_now=True)
+    start_date = models.DateTimeField(default= timezone.now)
+    end_date = models.DateTimeField(default= timezone.now)
 
     def __str__(self):
         return f"{self.id}- {self.airplane.airplane_name} ({self.flight_type})"
+
+
+    def get_total_baggage(self):
+        if self.baggage_cabin and self.baggage_checkin:
+            return self.baggage_cabin + self.baggage_checkin
 
     class Meta:
         verbose_name = "AirPlane Ticket"

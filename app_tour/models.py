@@ -1,5 +1,6 @@
 from django.db import models
 from django_countries.fields import CountryField
+from ckeditor_uploader.fields import RichTextUploadingField
 
 # Create your models here.
 class TourLocationModel(models.Model):
@@ -25,9 +26,9 @@ class TourPackageModel(models.Model):
     tour_duration = models.IntegerField(null=True, blank=True)
     peoples_limit = models.PositiveIntegerField(default=1, null=True, blank=True)
 
-    details = models.TextField(max_length=2055, null=True)
-    options = models.TextField(max_length=2055, null=True)
-    policy = models.TextField(max_length=2055, null=True)
+    details = RichTextUploadingField(null=True)
+    options = RichTextUploadingField(null=True)
+    policy = RichTextUploadingField(null=True)
 
     adult_traveler = models.PositiveIntegerField(null=True, default=1)
     child_traveler = models.PositiveIntegerField(null=True, blank=True)
@@ -42,6 +43,12 @@ class TourPackageModel(models.Model):
 
     def __str__(self):
         return f"{self.id}- {self.package_title}"
+
+
+    def get_discount_price(self):
+        if self.discount:
+            return (self.package_price / 100) * self.discount
+            
 
     class Meta:
         verbose_name = "Tour Package"

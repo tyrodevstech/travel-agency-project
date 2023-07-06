@@ -9,8 +9,11 @@
 
         <div class="flex-1">
             <!-- component -->
-            {% include 'app_main/partials/ticket.html' %}
-            {% include 'app_main/partials/ticket.html' %}
+            {% for ticket in tickets %}
+
+                {% include 'app_main/partials/ticket.html' %}
+
+            {% endfor %}
         </div>
     </div>
 </section>
