@@ -16,8 +16,9 @@
             </svg>
         </button>
         <div class="hidden w-full md:block md:w-auto uppercase" id="navbar-default">
-            <ul
-                class="font-medium flex flex-col p-4 md:py-2 rounded rounde mt-4 border border-gray-100 bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white/60 dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+            <div class="flex flex-col md:flex-row items-center gap-4">
+                <ul
+                class="font-medium flex flex-col p-4 rounded rounde mt-4 border border-gray-100 bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-transparent dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
                 <li>
                     <a href="/"
                         class="block py-2 pl-3 pr-4 text-white bg-green-700 rounded md:bg-transparent md:text-green-700 md:p-0 dark:text-white md:dark:text-green-500"
@@ -36,6 +37,16 @@
                         class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-green-700 md:p-0 dark:text-white md:dark:hover:text-green-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Contact</a>
                 </li>
             </ul>
+
+            {% if request.user.is_authenticated %}
+            <a href="{% url 'app_main:order-list' %}" class="focus:outline-none text-white bg-green-500 hover:bg-green-600 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2">Dashboard</a>
+            <a href="{% url 'app_main:signout' %}" class="focus:outline-none text-white bg-green-500 hover:bg-green-600 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2">Sign Out</a>
+            {% else %}
+            <a href="{% url 'app_main:signin' %}" class="focus:outline-none text-white bg-green-500 hover:bg-green-600 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2">Sign In</a>
+            {% endif %}
+            </div>
         </div>
+
+        
     </div>
 </nav>

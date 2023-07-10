@@ -14,10 +14,10 @@ class CustomUser(models.Model):
     name = models.CharField(max_length=122, null=True)
     email = models.CharField(max_length=122, null=True)
     phone = models.CharField(max_length=122, null=True)
-    gender = models.CharField(max_length=122, choices = person,null=True)
-    dob = models.DateField(null=True)
-    city = models.CharField(max_length=122, null=True)
-    country = models.CharField(max_length=122, null=True)
+    gender = models.CharField(max_length=122, choices = person, null=True, blank=True)
+    dob = models.DateField(null=True, blank=True)
+    city = models.CharField(max_length=122, null=True, blank=True)
+    country = models.CharField(max_length=122, null=True, blank=True)
 
     def __str__(self):
         return f"{self.id}- {self.name}"

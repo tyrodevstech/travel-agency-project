@@ -1,0 +1,129 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup | Travel Agency</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+    <link rel="stylesheet" href="{% static 'css/output.css' %}">
+    <!-- toast css cdn -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.min.css" integrity="sha512-wJgJNTBBkLit7ymC6vvzM1EcSWeM9mmOu+1USHaRBbHkm6W9EgM0HY27+UtUaprntaYQJF75rc8gjxllKs5OIQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"></script>
+</head>
+<body>
+    <section class="bg-gray-200 dark:bg-gray-900 md:h-screen">
+        <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto">
+            <a href="{% url 'app_main:home' %}" class="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
+                <i class="ti ti-gps text-4xl text-green-400 mr-2 leading-none"></i>
+                Travel Agency  
+            </a>
+            <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-lg xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+                <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+                    <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+                        Create an account
+                    </h1>
+                    <form class="space-y-4 md:space-y-6" method="POST">
+                        {% csrf_token %}
+                        <div>
+                            <label for="username" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your username</label>
+                            {{ form.name }}
+                            {{ form.name.errors }}
+                        </div>
+                        
+                        <div class="flex flex-col md:flex-row items-center gap-4">
+                            <div class="w-full md:w-1/2">
+                                <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
+                                {{ form.email }}
+                            </div>
+                            <div class="w-full md:flex-1">
+                                <label for="phone" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your phone</label>
+                                {{ form.phone }}
+                            </div>
+                        </div>
+
+                        <div class="flex flex-col md:flex-row items-center gap-4">
+                            <div class="w-full md:w-1/2">
+                                <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
+                                <!-- <input type="password" name="password" id="password" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-green-600 focus:border-green-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500" required=""> -->
+                                {{userform.password1}}
+                            </div>
+                            <div class="w-full md:flex-1">
+                                <label for="confirm-password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Confirm password</label>
+                                <!-- <input type="confirm-password" name="confirm-password" id="confirm-password" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-green-600 focus:border-green-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500" required=""> -->
+                                {{userform.password2}}
+                            </div>
+                        </div>
+                        {{ userform.password1.errors }}
+                        {{ userform.password2.errors }}
+
+                        <p class="text-gray-400">
+                            your password must contain at least 8 characters.
+                        </p>
+
+                        <button type="submit" class="w-full !mt-8 text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-3 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Create an account</button>
+                        <p class="text-sm font-light text-gray-500 dark:text-gray-400">
+                            Already have an account? <a href="{% url 'app_main:signin' %}" class="font-medium text-green-600 hover:underline dark:text-green-500">Sign in here</a>
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+      </section>
+
+    {% if messages %}
+    {% for message in messages %}
+    {% if message.tags == 'success' %}
+    <div id="msg_text_success" class="hidden ">{{ message }}</div>
+    {% elif message.tags == 'error' %}
+    <div id="msg_text_error" class="hidden ">{{ message }}</div>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+
+    <!-- jquery cdn -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js" integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- flowbite script -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.6/flowbite.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.6/datepicker.min.js"></script>
+    <!-- toast js cdn -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.min.js" integrity="sha512-zlWWyZq71UMApAjih4WkaRpikgY9Bz1oXIW5G0fED4vk14JjGlQ1UmkGM392jEULP8jbNMiwLWdM8Z87Hu88Fw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script>
+        $('#id_password1').addClass("bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-green-600 focus:border-green-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500");
+        $("#id_password1").attr("placeholder", "••••••••");
+        $('#id_password2').addClass("bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-green-600 focus:border-green-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500");
+        $('#id_password2').attr("placeholder", "••••••••");
+        $('.errorlist').addClass("text-red-500");
+
+
+        if ($('#msg_text_success').text() != '') {
+            $.toast({
+                heading: 'Message',
+                text: `${$('#msg_text_success').text()}`,
+                icon: 'success',
+                loader: true,
+                loaderBg: '#9EC600' ,
+                position: 'top-right',
+                stack: false
+            })
+        } else if ($('#msg_text_error').text() != '') {
+            $.toast({
+                heading: 'Message',
+                text: `${$('#msg_text_error').text()}`,
+                icon: 'error',
+                loader: true,
+                loaderBg: '#9EC600' ,
+                position: 'top-right',
+                stack: false
+            })
+        }
+    </script>
+
+</body>
+</html>
+
+
