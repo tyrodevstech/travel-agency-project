@@ -9,6 +9,9 @@
     <title>{% block title %}{% endblock title %} | Travel Agency</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
     <link rel="stylesheet" href="{% static 'css/output.css' %}">
+    <!-- toast css cdn -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.min.css" integrity="sha512-wJgJNTBBkLit7ymC6vvzM1EcSWeM9mmOu+1USHaRBbHkm6W9EgM0HY27+UtUaprntaYQJF75rc8gjxllKs5OIQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"></script>
 </head>
 
@@ -18,11 +21,26 @@
         {% block main %}
         {% endblock main %}
     </main>
+
+    {% if messages %}
+    {% for message in messages %}
+    {% if message.tags == 'success' %}
+    <div id="msg_text_success" class="hidden ">{{ message }}</div>
+    {% elif message.tags == 'error' %}
+    <div id="msg_text_error" class="hidden ">{{ message }}</div>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+
     {% block script %}
     {% endblock script %}
     <!-- flowbite script -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.6/flowbite.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.6/datepicker.min.js"></script>
+    <!-- jquery cdn -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js" integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- toast js cdn -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.min.js" integrity="sha512-zlWWyZq71UMApAjih4WkaRpikgY9Bz1oXIW5G0fED4vk14JjGlQ1UmkGM392jEULP8jbNMiwLWdM8Z87Hu88Fw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
         function stickyElement(e) {
             var navbar = document.querySelector('#nav');
@@ -37,7 +55,30 @@
             }
         }
         window.addEventListener('scroll', stickyElement);
+    </script>
 
+    <script>
+        if ($('#msg_text_success').text() != '') {
+            $.toast({
+                heading: 'Message',
+                text: `${$('#msg_text_success').text()}`,
+                icon: 'success',
+                loader: true,
+                loaderBg: '#9EC600' ,
+                position: 'top-right',
+                stack: false
+            })
+        } else if ($('#msg_text_error').text() != '') {
+            $.toast({
+                heading: 'Message',
+                text: `${$('#msg_text_error').text()}`,
+                icon: 'error',
+                loader: true,
+                loaderBg: '#9EC600' ,
+                position: 'top-right',
+                stack: false
+            })
+        }
     </script>
 </body>
 

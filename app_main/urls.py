@@ -10,6 +10,7 @@ urlpatterns = [
     path("order-list/", dashboard_view, name="order-list"),
     path("update-profile/", update_profile_view, name="update-profile"),
     path("change-password/", change_password_view, name="change-password"),
+    path("feedback/", user_feedback_view, name="feedback"),
 
     path("signin/", signin_view, name="signin"),
     path("signout/", signout_view, name="signout"),

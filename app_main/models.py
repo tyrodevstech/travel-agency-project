@@ -29,3 +29,22 @@ class CustomUser(models.Model):
         ordering = [
             '-id'
         ]
+
+
+class UserFeedback(models.Model):
+    name = models.CharField(max_length=122, null=True)
+    phone = models.CharField(max_length=122, null=True)
+    message = models.TextField(max_length=900, null=True, blank=True)
+    created_at = models.DateField(auto_now_add=True)
+
+
+    def __str__(self):
+        return f"{self.id}- {self.name}"
+
+    class Meta:
+        verbose_name = "User Feedback"
+        verbose_name_plural = "User Feedbacks"
+
+        ordering = [
+            '-id'
+        ]

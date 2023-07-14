@@ -7,7 +7,7 @@ from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.models import User
 from django.contrib import messages
 
-from app_main.forms import CustomUserForm
+from app_main.forms import CustomUserForm, UserFeedbackForm
 from app_main.models import CustomUser
 # Create your views here.
 
@@ -130,3 +130,17 @@ def change_password_view(request):
     else:
         form = PasswordChangeForm(request.user)
     return render(request, 'app_main/dashboard/change_password.html', {'form': form})
+
+
+
+def user_feedback_view(request):
+    form = UserFeedbackForm()
+    if request.method == 'POST':
+        form = UserFeedbackForm(request.POST)
+        if form.is_valid():
+            form.save()
+
+            messages.success(request, 'Your feedback has been sent!')
+            return redirect('app_main:feedback')
+
+    return render(request, 'app_main/feedback.html', {'form': form})
