@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.views.generic.list import ListView
+from django.views.generic import TemplateView
 
 # from django_filters.views import FilterView
 
@@ -34,3 +35,6 @@ class AirPlaneTicketsListView(ListView):
         context['traveler'] = self.request.GET.get('traveler',1)
 
         return context
+
+class AirPlaneTicketsDetailsView(TemplateView):
+    template_name = 'app_flight/airplane_tickets.html'

@@ -1,0 +1,84 @@
+{% extends 'app_main/dashboard/base.html' %}
+{% load static %}
+{% block title %}Update Profile | {% endblock title %}
+
+
+{% block main_content %}
+
+
+<section class="relative overflow-y-auto p-4 md:p-6 min-h-full mb-4">
+    {% include 'app_main/partials/section_nav.html' %}
+    <div class="w-full mx-auto h-full">
+        <h2 class="text-xl font-bold text-gray-900 dark:text-white">Update your profile</h2> <hr class="my-4">
+        
+        <form method="POST">
+            {% csrf_token %}
+            <div class="mb-6">
+                <label for="username" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your username</label>
+                <!-- <input type="text" id="username" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500" placeholder="username" required> -->
+                {{ form.name }}
+                {{ form.name.errors }}
+            </div>
+            <div class="flex flex-col md:flex-row items-center gap-4 mb-6">
+                <div class="w-full md:w-1/2">
+                    <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
+                    {{ form.email }}
+                    {{ form.email.errors }}
+                </div>
+                <div class="w-full md:flex-1">
+                    <label for="phone" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your phone</label>
+                    {{ form.phone }}
+                    {{ form.phone.errors }}
+                </div>
+            </div>
+            <div class="flex flex-col md:flex-row items-center gap-4 mb-6">
+                <div class="w-full md:w-1/2">
+                    <label for="city" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your city</label>
+                    {{ form.city }}
+                    {{ form.city.errors }}
+                </div>
+                <div class="w-full md:flex-1">
+                    <label for="country" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your country</label>
+                    {{ form.country }}
+                    {{ form.country.errors }}
+                </div>
+            </div>
+
+            <div class="flex flex-col md:flex-row items-start gap-4 mb-6">
+                <div class="w-full md:w-1/2">
+                    <label for="city" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your date of birth</label>
+                    <div class="relative mb-6">
+                        <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevrons-right text-gray-500 dark:text-gray-400" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                <path d="M7 7l5 5l-5 5"></path>
+                                <path d="M13 7l5 5l-5 5"></path>
+                             </svg>                     
+                        </div>
+                        {{ form.dob }}
+                        {{ form.dob.errors }}
+                    </div>
+                </div>
+                <div class="w-full md:flex-1">
+                    <label for="gender" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select your gender</label>    
+                    <div class="relative mb-6">
+                        <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevrons-right text-gray-500 dark:text-gray-400" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                <path d="M7 7l5 5l-5 5"></path>
+                                <path d="M13 7l5 5l-5 5"></path>
+                             </svg>
+                        </div>
+                        {{ form.gender }}
+                        {{ form.gender.errors }}
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="text-white bg-green-500 hover:bg-green-600 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Submit</button>
+        </form>
+
+    </div>
+      
+</section>
+{% endblock main_content %}

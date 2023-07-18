@@ -1,0 +1,213 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+   <title>{% block title %}{% endblock title %}Travel Agency</title>
+   <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.4/flowbite.min.css" rel="stylesheet" />
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+   <link rel="stylesheet" href="{% static 'css/output.css' %}">
+    
+    <!-- toast css cdn -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.min.css" integrity="sha512-wJgJNTBBkLit7ymC6vvzM1EcSWeM9mmOu+1USHaRBbHkm6W9EgM0HY27+UtUaprntaYQJF75rc8gjxllKs5OIQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body class="h-[calc(100%-4rem)] md:h-[calc(100%-3.5rem)] mt-16 md:mt-14 relative">
+
+   <nav class="fixed top-0 z-50 w-full bg-white border-b border-gray-200 ">
+      <div class="px-3 py-3 lg:px-5 lg:pl-3">
+         <div class="flex items-center justify-between">
+            <div class="flex items-center justify-start">
+               <button data-drawer-target="logo-sidebar" data-drawer-toggle="logo-sidebar" aria-controls="logo-sidebar"
+                  type="button"
+                  class="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 ">
+                  <span class="sr-only">Open sidebar</span>
+                  <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
+                     xmlns="http://www.w3.org/2000/svg">
+                     <path clip-rule="evenodd" fill-rule="evenodd"
+                        d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z">
+                     </path>
+                  </svg>
+               </button>
+               <a href="/" class="ml-2 md:ml-0 flex items-center uppercase">
+                <i class="ti ti-gps text-4xl text-green-400 mr-2 leading-none"></i>
+                <span class="self-center text-2xl font-bold whitespace-nowrap dark:text-white">Travel Agency</span>
+               </a>
+            </div>
+            <div class="flex items-center">
+               <div class="flex items-center ml-3">
+                  <div>
+                     <button type="button"
+                        class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 "
+                        aria-expanded="false" data-dropdown-toggle="dropdown-user">
+                        <span class="sr-only">Open user menu</span>
+                        <img class="w-8 h-8 rounded-full"
+                           src="{% static 'images/profile.png' %}"
+                           alt="user photo">
+                     </button>
+                  </div>
+                  <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow "
+                     id="dropdown-user">
+                     <div class="px-4 py-3" role="none">
+                        <p class="text-sm text-gray-900 " role="none">
+                           {{request.user.username}}
+                        </p>
+                        <p class="text-sm font-medium text-gray-900 truncate " role="none">
+                           {{request.user.email}}
+                        </p>
+                     </div>
+                     <ul class="py-1" role="none">
+                        <li>
+                           <a href="{% url 'app_main:order-list' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 "
+                              role="menuitem">Dashboard</a>
+                        </li>
+
+                        <li>
+                           <a href="{% url 'app_main:signout' %}"
+                              class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 " role="menuitem">Sign
+                              Out</a>
+                        </li>
+                     </ul>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </nav>
+
+   <aside id="logo-sidebar"
+      class="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 "
+      aria-label="Sidebar">
+      <div class="h-full px-3 pb-4 overflow-y-auto bg-white ">
+         <ul class="space-y-2 font-medium">
+            {% url 'app_main:order-list' as dashboardV %}
+            <li>
+               <a href="{% url 'app_main:order-list' %}"
+                  class="flex items-center p-2 text-gray-900 rounded-lg {% if request.path == dashboardV %}bg-gray-100{% endif %}">
+                  <svg xmlns="http://www.w3.org/2000/svg"
+                     class="icon icon-tabler icon-tabler-home flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75  group-hover:text-gray-900 "
+                     width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                     stroke-linecap="round" stroke-linejoin="round">
+                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                     <path d="M5 12l-2 0l9 -9l9 9l-2 0"></path>
+                     <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7"></path>
+                     <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6"></path>
+                  </svg>
+                  <span class="ml-3">Dashboard</span>
+               </a>
+            </li>
+
+            {% url 'app_main:update-profile' as updateV %}
+            <li>
+               <a href="{% url 'app_main:update-profile' %}"
+                  class="flex items-center p-2 text-gray-900 rounded-lg {% if request.path == updateV %}bg-gray-100{% endif %}">
+                  <svg xmlns="http://www.w3.org/2000/svg"
+                     class="icon icon-tabler icon-tabler-user-edit flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75  group-hover:text-gray-900 "
+                     width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                     stroke-linecap="round" stroke-linejoin="round">
+                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                     <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0"></path>
+                     <path d="M6 21v-2a4 4 0 0 1 4 -4h3.5"></path>
+                     <path d="M18.42 15.61a2.1 2.1 0 0 1 2.97 2.97l-3.39 3.42h-3v-3l3.42 -3.39z"></path>
+                  </svg>
+                  <span class="flex-1 ml-3 whitespace-nowrap">Update Profile</span>
+               </a>
+            </li>
+
+            {% url 'app_main:change-password' as passwordV %}
+            <li>
+               <a href="{% url 'app_main:change-password' %}"
+                  class="flex items-center p-2 text-gray-900 rounded-lg {% if request.path == passwordV %}bg-gray-100{% endif %}">
+                  <svg xmlns="http://www.w3.org/2000/svg" 
+                     class="icon icon-tabler icon-tabler-key flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75  group-hover:text-gray-900" 
+                     width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" 
+                     stroke-linecap="round" stroke-linejoin="round">
+                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                     <path d="M16.555 3.843l3.602 3.602a2.877 2.877 0 0 1 0 4.069l-2.643 2.643a2.877 2.877 0 0 1 -4.069 0l-.301 -.301l-6.558 6.558a2 2 0 0 1 -1.239 .578l-.175 .008h-1.172a1 1 0 0 1 -.993 -.883l-.007 -.117v-1.172a2 2 0 0 1 .467 -1.284l.119 -.13l.414 -.414h2v-2h2v-2l2.144 -2.144l-.301 -.301a2.877 2.877 0 0 1 0 -4.069l2.643 -2.643a2.877 2.877 0 0 1 4.069 0z"></path>
+                     <path d="M15 9h.01"></path>
+                  </svg>
+                  <span class="flex-1 ml-3 whitespace-nowrap">Change Password</span>
+               </a>
+            </li>
+
+            <li>
+               <a href="{% url 'app_main:feedback' %}"
+                  class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-message-2 flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75  group-hover:text-gray-900" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                     <path d="M8 9h8"></path>
+                     <path d="M8 13h6"></path>
+                     <path d="M9 18h-3a3 3 0 0 1 -3 -3v-8a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v8a3 3 0 0 1 -3 3h-3l-3 3l-3 -3z"></path>
+                  </svg>
+                  <span class="flex-1 ml-3 whitespace-nowrap">Feedback</span>
+               </a>
+            </li>
+           
+         </ul>
+      </div>
+   </aside>
+
+   <main class="sm:ml-64 h-full bg-white">
+      {% block main_content %} {% endblock main_content %}
+   </main>
+
+    {% if messages %}
+        {% for message in messages %}
+            {% if message.tags == 'success' %}
+                <div id="msg_text_success" class="hidden ">{{ message }}</div>
+            {% elif message.tags == 'error' %}
+                <div id="msg_text_error" class="hidden ">{{ message }}</div>
+            {% elif message.tags == 'info' %}
+                <div id="msg_text_info" class="hidden ">{{ message }}</div>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.4/flowbite.min.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.6/datepicker.min.js"></script>
+   <!-- jquery cdn -->
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js" integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+   <!-- toast js cdn -->
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.min.js" integrity="sha512-zlWWyZq71UMApAjih4WkaRpikgY9Bz1oXIW5G0fED4vk14JjGlQ1UmkGM392jEULP8jbNMiwLWdM8Z87Hu88Fw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+   <script>
+      if ($('#msg_text_success').text() != '') {
+            $.toast({
+                heading: 'Message',
+                text: `${$('#msg_text_success').text()}`,
+                icon: 'success',
+                loader: true,
+                loaderBg: '#fff' ,
+                position: 'top-right',
+                stack: false
+            })
+        } else if ($('#msg_text_error').text() != '') {
+            $.toast({
+                heading: 'Message',
+                text: `${$('#msg_text_error').text()}`,
+                icon: 'error',
+                loader: true,
+                loaderBg: '#fff' ,
+                position: 'top-right',
+                stack: false
+            })
+        } else if ($('#msg_text_info').text() != '') {
+            $.toast({
+                heading: 'Message',
+                text: `${$('#msg_text_info').text()}`,
+                icon: 'info',
+                loader: true,
+                loaderBg: '#fff' ,
+                position: 'top-right',
+                stack: false
+            })
+        }
+   </script>
+
+   {% block script %} {% endblock script %}
+</body>
+
+</html>
