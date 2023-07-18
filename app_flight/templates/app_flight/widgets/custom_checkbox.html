@@ -1,0 +1,12 @@
+{% with id=widget.attrs.id %}
+<div{% if id %} id="{{ id }}"{% endif %}{% if widget.attrs.class %} class="{{ widget.attrs.class }}"{% endif %}>
+    {% for group, options, index in widget.optgroups %}
+        {% for option in options %}
+            <div class="flex items-start mb-2">
+                <input type="{{ option.type }}" name="{{ option.name }}"{% if option.value != None %} value="{{ option.value|stringformat:'s' }}"{% endif %} {% for name, value in option.attrs.items %}{% if value is not False %} {{ name }}{% if value is not True %}="{{ value|stringformat:'s' }}"{% endif %}{% endif %}{% endfor %} class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                <label {% if option.attrs.id %} for="{{ option.attrs.id }}"{% endif %} class="cursor-pointer ml-2 -mt-[0.15em] text-sm font-medium text-gray-900 dark:text-gray-300">{{ option.label }}</label>
+            </div>
+        {% endfor %}
+    {% endfor %}
+</div>
+{% endwith %}

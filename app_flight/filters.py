@@ -1,16 +1,54 @@
-import django_filters
+import django_filters as filter
+from django_filters.widgets import RangeWidget
+from django import forms
 
-from app_flight.models import AirPlaneTicketModel
-from app_flight.utils import DayNightFilter
+from app_flight.models import AirplaneModel, AirPlaneTicketModel, AirportModel
+class CustomRangeWidget(RangeWidget):
+    template_name = 'app_flight/widgets/rangeinput.html'
 
+class CustomCheckboxSelectMultiple(forms.CheckboxSelectMultiple):
+    template_name = 'app_flight/widgets/custom_checkbox.html'
 
-class AirPlaneTicketFilters(django_filters.FilterSet):
-    airplane_name = django_filters.CharFilter(field_name='airplane__airplane_name', lookup_expr='icontains')
-    day_night = DayNightFilter(field_name='start_date', lookup_expr='exact')
-    
+class DayNightFilter(filter.MultipleChoiceFilter):
+    def filter(self, qs, value):
+        if "day" in value and "night" in value:
+            return qs
+        elif "day" in value:
+            return qs.filter(depart_time__gte="06:00:00", depart_time__lt="18:00:00")
+        elif "night" in value:
+            return qs.exclude(depart_time__gte="06:00:00", depart_time__lt="18:00:00")
+        return qs
+
+class AirPlaneTicketFilters(filter.FilterSet):
+    airplane = filter.ModelMultipleChoiceFilter(
+        queryset=AirplaneModel.objects.all(),
+        widget=CustomCheckboxSelectMultiple
+    )
+    schedule = DayNightFilter(
+        field_name="depart_time",
+        lookup_expr="exact",
+        choices=(('day', 'day'), ('night', 'night'))
+    )
+    ticket_price = filter.RangeFilter(
+        field_name='base_price',
+        label="Price",
+        widget=CustomRangeWidget
+    )
+    flight_type = filter.MultipleChoiceFilter(
+        field_name='flight_type',
+        choices=AirPlaneTicketModel.FLGHT_TYPE_CHOICES,
+        widget=CustomCheckboxSelectMultiple
+    )
+    location_from = filter.ModelChoiceFilter(queryset=AirportModel.objects.all(), empty_label='Locaton From')
+    location_to = filter.ModelChoiceFilter(queryset=AirportModel.objects.all(), empty_label='Locaton To')
+    depart_date = filter.DateFilter(field_name='depart_date')
 
     class Meta:
         model = AirPlaneTicketModel
-        fields = {
-            'flight_type': ['icontains'],
-            }
+        fields = []
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.filters["airplane"].field.label_from_instance = lambda airplane: airplane.airplane_name
+        self.filters["location_from"].field.label_from_instance = lambda airport: f"{airport.airport}, {airport.city}, {airport.country.name}"
+        self.filters["location_to"].field.label_from_instance = lambda airport: f"{airport.airport}, {airport.city}, {airport.country.name}"

@@ -4,6 +4,42 @@
 
 {% block main %}
 <section class="container py-6">
+    <form id="navForm"
+        class="bg-white p-4 rounded-md w-full mt-4 mb-12 flex justify-between items-center text-neutral-700 gap-4 flex-wrap">
+        <div class="flex items-center">
+            {{filter_form.location_from}}
+            <span class="mx-4 text-gray-500">to</span>
+            {{filter_form.location_to}}
+        </div>
+        <span class="w-px bg-gray-300 self-stretch  hidden md:block"></span>
+        <div class="relative max-w-sm">
+            <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                    fill="currentColor" viewBox="0 0 20 20">
+                    <path
+                        d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
+                </svg>
+            </div>
+            <input name="depart_date" datepicker type="text" value="{{request.GET.depart_date}}"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Select date" autocomplete="off">
+        </div>
+        <span class="w-px bg-gray-300 self-stretch hidden md:block"></span>
+        <div>
+            <input type="number" id="id_traveler"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        placeholder="Traveler" autocomplete="off" min="1" name="traveler" value="{% if 'traveler' in request.GET %}{{request.GET.traveler}}{% endif %}">
+        </div>
+        <button class="bg-indigo-800 rounded-md px-2 py-2" type="button" onclick="submit_filter_forms()"> 
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search text-white" width="24"
+                height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path>
+                <path d="M21 21l-6 -6"></path>
+            </svg>
+        </button>
+    </form>
     <div class="flex gap-6 flex-col md:flex-row">
         {% include 'app_main/partials/filter.html' %}
 

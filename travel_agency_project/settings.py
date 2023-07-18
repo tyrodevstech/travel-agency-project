@@ -43,8 +43,8 @@ DEFAULT_APPS = [
     'django_filters',
     'ckeditor',
     'ckeditor_uploader',
+    'django_property_filter',
 ]
-
 PROJECT_APP = [
     "app_main",
     "app_flight",
@@ -119,7 +119,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Dhaka'
 
 USE_I18N = True
 

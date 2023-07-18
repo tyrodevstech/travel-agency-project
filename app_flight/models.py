@@ -66,21 +66,27 @@ class AirPlaneTicketModel(models.Model):
     airplane = models.ForeignKey(AirplaneModel, on_delete=models.CASCADE, null=True)
     discount = models.ForeignKey(DiscountModel, on_delete=models.CASCADE, null=True, blank=True)
     flight_type =  models.CharField(max_length=122, choices=FLGHT_TYPE_CHOICES, null=True, default='Economy')
+    
     duration = models.CharField(max_length=25, null=True, blank=True)
-    base_adult_fare = models.FloatField(null=True, blank=True)
-    base_child_fare = models.FloatField(null=True, blank=True)
-    base_infant_fare = models.FloatField(null=True, blank=True)
-    adult_tax = models.FloatField(null=True, blank=True)
-    child_tax = models.FloatField(null=True, blank=True)
-    infant_tax = models.FloatField(null=True, blank=True)
+    
+    base_price = models.FloatField(null=True, blank=True)
+
+    child_discount = models.FloatField(null=True, blank=True)
+    infant_discount = models.FloatField(null=True, blank=True)
+
+    tax = models.FloatField(null=True, blank=True)
+    
     baggage_cabin = models.FloatField(null=True, blank=True, verbose_name="Baggage KG (cabin)")
     baggage_checkin = models.FloatField(null=True, blank=True, verbose_name="Baggage KG (check-in)")
 
     location_from = models.ForeignKey(AirportModel, on_delete=models.CASCADE, null=True, related_name="location_from")
     location_to = models.ForeignKey(AirportModel, on_delete=models.CASCADE, null=True, related_name="location_to")
 
-    start_date = models.DateTimeField(default= timezone.now)
-    end_date = models.DateTimeField(default= timezone.now)
+    depart_date = models.DateField(default= timezone.now)
+    depart_time = models.TimeField(default= timezone.now)
+
+    arrive_date = models.DateField(default= timezone.now)
+    arrive_time = models.TimeField(default= timezone.now)
 
     def __str__(self):
         return f"{self.id}- {self.airplane.airplane_name} ({self.flight_type})"
@@ -89,6 +95,20 @@ class AirPlaneTicketModel(models.Model):
     def get_total_baggage(self):
         if self.baggage_cabin and self.baggage_checkin:
             return self.baggage_cabin + self.baggage_checkin
+    
+    def total_adult_price(self):
+        return self.base_adult_fare + self.adult_tax
+    
+    def get_ticket_price(self,passenger_type='adult'):
+        base_price = self.base_price  # Base price for the ticket
+        if passenger_type == 'child':
+            base_price *= self.child_discount  # Apply a 25% discount for child passengers
+        elif passenger_type == 'infant':
+            base_price *= self.infant_discount  # Apply a 50% discount for infant passengers
+
+        ticket_price = base_price + (base_price * self.tax)
+
+        return ticket_price
 
     class Meta:
         verbose_name = "AirPlane Ticket"

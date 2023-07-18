@@ -1,0 +1,160 @@
+<div class="range-wrapper">
+    <div class="slider">
+        <div class="progress"></div>
+    </div>
+    <div class="range-input">
+        <input type="range" class="range-min" min="0" max="100000" value="0" step="100">
+        <input type="range" class="range-max" min="0" max="100000" value="100000" step="100">
+    </div>
+    <div class="price-input flex my-4">
+        <div class="field flex flex-col">
+            <input  type="{{ widget.subwidgets.0.type }}" name="{{ widget.subwidgets.0.name }}"
+                {% if widget.subwidgets.0.value != None %} value="{{ widget.subwidgets.0.value|stringformat:'s' }}"{% endif %}
+                {% for name, value in widget.subwidgets.0.attrs.items %}{% if value is not False %} {{ name }}{% if value is not True %}="{{ value|stringformat:'s' }}"{% endif %}{% endif %}{% endfor %}
+                maxlength="5"
+                class="input-min w-full px-3 py-2 text-center border border-gray-200 rounded-lg bg-gray-50 focus:border-yellow-400 focus:outline-none">
+            <span class="text-xs">Min</span>
+        </div>
+        <div class="separator">-</div>
+        <div class="field flex flex-col">
+            <input  type="{{ widget.subwidgets.1.type }}" name="{{ widget.subwidgets.1.name }}"
+                {% if widget.subwidgets.1.value != None %} value="{{ widget.subwidgets.1.value|stringformat:'s' }}"{% endif %}
+                {% for name, value in widget.subwidgets.1.attrs.items %}{% if value is not False %} {{ name }}{% if value is not True %}="{{ value|stringformat:'s' }}"{% endif %}{% endif %}{% endfor %}
+                maxlength="5"
+                class="input-max w-full px-3 py-2 text-center border border-gray-200 rounded-lg bg-gray-50 focus:border-yellow-400 focus:outline-none">
+            <span class="text-xs">Max</span>
+        </div>
+    </div>
+</div>
+
+<style>
+    ::selection {
+        color: #fff;
+        background: #17A2B8;
+    }
+
+
+    .price-input .field {
+        display: flex;
+        width: 100%;
+        height: 45px;
+        align-items: center;
+    }
+
+    .price-input .separator {
+        width: 130px;
+        display: flex;
+        font-size: 19px;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .slider {
+        height: 5px;
+        position: relative;
+        background: #ddd;
+        border-radius: 5px;
+    }
+
+    .slider .progress {
+        height: 100%;
+        left: 0%;
+        right: 0%;
+        position: absolute;
+        border-radius: 5px;
+        background: #17A2B8;
+    }
+
+    .range-input {
+        position: relative;
+    }
+
+    .range-input input {
+        position: absolute;
+        width: 100%;
+        height: 5px;
+        top: -5px;
+        background: none;
+        pointer-events: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+        height: 17px;
+        width: 17px;
+        border-radius: 50%;
+        background: #17A2B8;
+        pointer-events: auto;
+        -webkit-appearance: none;
+        box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
+    }
+
+    input[type="range"]::-moz-range-thumb {
+        height: 17px;
+        width: 17px;
+        border: none;
+        border-radius: 50%;
+        background: #17A2B8;
+        pointer-events: auto;
+        -moz-appearance: none;
+        box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
+    }
+</style>
+<script>
+    const rangeInput = document.querySelectorAll(".range-input input"),
+        priceInput = document.querySelectorAll(".price-input input"),
+        range = document.querySelector(".slider .progress");
+    let priceGap = 1000;
+    priceInput.forEach(input => {
+        input.addEventListener("input", e => {
+            let minPrice = parseInt(priceInput[0].value),
+                maxPrice = parseInt(priceInput[1].value);
+
+            if ((maxPrice - minPrice >= priceGap) && maxPrice <= rangeInput[1].max) {
+                if (e.target.className === "input-min") {
+                    rangeInput[0].value = minPrice;
+                    range.style.left = ((minPrice / rangeInput[0].max) * 100) + "%";
+                } else {
+                    rangeInput[1].value = maxPrice;
+                    range.style.right = 100 - (maxPrice / rangeInput[1].max) * 100 + "%";
+                }
+            }
+        });
+    });
+    rangeInput.forEach(input =>{
+        input.addEventListener("input", e =>{
+            let minVal = parseInt(rangeInput[0].value),
+            maxVal = parseInt(rangeInput[1].value);
+            if((maxVal - minVal) < priceGap){
+                if(e.target.className === "range-min"){
+                    rangeInput[0].value = maxVal - priceGap
+                }else{
+                    rangeInput[1].value = minVal + priceGap;
+                }
+            }else{
+                priceInput[0].value = minVal;
+                priceInput[1].value = maxVal;
+                range.style.left = ((minVal / rangeInput[0].max) * 100) + "%";
+                range.style.right = 100 - (maxVal / rangeInput[1].max) * 100 + "%";
+            }
+        });
+    });
+    document.addEventListener("DOMContentLoaded", (event) => {
+        priceInput.forEach(input => {
+            let minPrice = parseInt(priceInput[0].value),
+                maxPrice = parseInt(priceInput[1].value);
+            // if (!minPrice)priceInput[0].value = 0
+            // if (!maxPrice)priceInput[1].value = 10000
+            if ((maxPrice - minPrice >= priceGap) && maxPrice <= rangeInput[1].max) {
+                if (input.classList.contains('input-min')) {
+                    rangeInput[0].value = minPrice;
+                    range.style.left = ((minPrice / rangeInput[0].max) * 100) + "%";
+                } else {
+                    rangeInput[1].value = maxPrice;
+                    range.style.right = 100 - (maxPrice / rangeInput[1].max) * 100 + "%";
+                }
+            }
+        });
+    });
+</script>

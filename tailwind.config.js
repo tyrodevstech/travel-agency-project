@@ -4,6 +4,7 @@ module.exports = {
     "./static/**/*.{html,js}",
     "./templates/**/*.{html,js}",
     "./node_modules/flowbite/**/*.js",
+    "./app_flight/templates/**/*.{html,css,js}",
   ],
   theme: {
     container: {
