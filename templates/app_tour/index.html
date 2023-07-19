@@ -5,10 +5,13 @@
 
 {% block main %}
 <section class="container mx-auto mt-6">
-    <div class="flex flex-row items-center gap-4">
-        <div class="flex-1 relative my-2">
+    <form id="navForm" class="flex flex-row gap-4 mt-4 mb-12">
+        <div class="flex-1 relative">
             <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-browser-check text-gray-500 dark:text-gray-400" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <svg xmlns="http://www.w3.org/2000/svg"
+                    class="icon icon-tabler icon-tabler-browser-check text-gray-500 dark:text-gray-400" width="24"
+                    height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                    stroke-linecap="round" stroke-linejoin="round">
                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                     <path d="M4 4m0 1a1 1 0 0 1 1 -1h14a1 1 0 0 1 1 1v14a1 1 0 0 1 -1 1h-14a1 1 0 0 1 -1 -1z"></path>
                     <path d="M4 8h16"></path>
@@ -16,27 +19,22 @@
                     <path d="M9.5 14.5l1.5 1.5l3 -3"></path>
                 </svg>
             </div>
-            <select id="countries" class="py-6 pl-12 bg-gray-50 border border-gray-300 text-gray-900 text-xl font-semibold rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                <option selected>Select Location/Tour</option>
-                <option value="US">Tanguar Haor</option>
-                <option value="CA">Cox's Bazar</option>
-            </select>
+            {{filter_form.tour_location}}
         </div>
-        
+        <button type="button" onclick="submit_filter_forms()"
+            class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Modify Search
+        </button>
+    </form>
 
-        <button type="button" class="px-4 py-7 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Modify Search</button>
-    </div>
 
-    <div class="my-4 flex flex-row items-start gap-6">
-        <div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg drop-shadow-lg dark:bg-gray-800 dark:border-gray-700">
-            <h5 class="mb-2 text-xl font-normal tracking-tight text-gray-900 dark:text-white">Destination: 2 places found</h5>
-            <h5 class="text-xl font-medium tracking-tight text-gray-900 dark:text-white">Filter By</h5> <hr class="mb-4">
-            <button type="button" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                Reset Filters
-            </button>
+    <div class="flex gap-6 flex-col md:flex-row">
+        {% include 'app_tour/partials/filter.html' %}
+
+        <div class="flex-1">
+            {% for tour in tour_packages %}
+                {% include 'app_tour/partials/tour_card.html' %}
+            {% endfor %}
         </div>
-
-        {% include 'app_tour/partial/tour_card.html' %}
     </div>
 </section>
 {% endblock main %}

@@ -1,0 +1,185 @@
+<div class="md:max-w-xs md:w-96">
+  <div class="flex justify-between items-center mb-4">
+    <!-- filters Button (md and plus Screen) -->
+    <button onclick="showFilters()"
+      class="cursor-pointer flex gap-2 text-white hover:bg-green-700 focus:ring-2 focus:ring-offset-1 rounded-sm focus:ring-green-800 py-1.5 px-3 bg-green-800 text-sm justify-center items-center">
+      <i class="ti ti-adjustments-alt text-base"></i>
+      Filters
+    </button>
+    <p class="text-base text-green-600 font-medium">Showing 09 Results</p>
+  </div>
+
+  <form id="filterSection" class="block relative bg-white w-full p-4 shadow">
+    <!-- Cross button Code -->
+    <div onclick="clearFilter(document.getElementById('filterSection'))" class="cursor-pointer flex justify-end">
+      <i class="ti ti-x"></i>
+    </div>
+    <!-- AIRPLANE SECTION -->
+    <div>
+      <p class="lg:text-lg text-base font-medium mb-2">Title</p>
+      {{filter_form.package_title}}
+    </div>
+    <hr class="bg-green-200 w-full md:my-6 my-3" />
+
+    <!-- PRICE SECTION -->
+    <div>
+      <p class="lg:text-lg text-base font-medium mb-2">Price Range</p>
+      {{ filter_form.price }}
+    </div>
+    <hr class="bg-green-200 w-full md:my-6 my-3" />
+    <!-- FLIGHT TYPE SECTION -->
+    <div>
+      <p class="lg:text-lg text-base font-medium mb-2">Journey Date</p>
+      {{filter_form.journey_date}}
+    </div>
+    <div class="block w-full mt-10">
+      <button type="button" onclick="submit_filter_forms()"
+        class="w-full hover:bg-green-700 dark:hover:bg-green-100 focus:ring focus:ring-offset-2 focus:ring-green-800 text-base leading-4 font-medium py-3 rounded px-4 text-white bg-green-800">
+        Apply Filter
+      </button>
+    </div>
+  </form>
+</div>
+
+<style>
+  .checkbox:checked+.check-icon {
+    display: flex;
+  }
+</style>
+
+<script>
+  var fSection = document.getElementById("filterSection");
+  function showFilters() {
+    if (fSection.classList.contains("hidden")) {
+      fSection.classList.remove("hidden");
+      fSection.classList.add("block");
+    } else {
+      fSection.classList.add("hidden");
+    }
+  }
+
+  function closeFilterSection() {
+    fSection.classList.add("hidden");
+  }
+
+  const combineForms = (...forms) => {
+    const combinedForm = document.createElement('form');
+
+    forms.forEach(form => {
+      Array.from(form.elements).forEach(element => {
+        const elementType = element.type.toLowerCase();
+
+        if (
+          elementType === 'select-one' ||
+          elementType === 'select-multiple'
+        ) {
+          const selectedOptions = Array.from(element.options).filter(
+            option => option.selected && option.value
+          );
+          if (selectedOptions.length > 0) {
+            const clonedSelect = element.cloneNode(false);
+            selectedOptions.forEach(option => {
+              const clonedOption = option.cloneNode(true);
+              clonedOption.selected = true;
+              clonedSelect.appendChild(clonedOption);
+            });
+            combinedForm.appendChild(clonedSelect);
+          }
+        } else if (
+          (elementType === 'checkbox' || elementType === 'radio') &&
+          element.checked
+        ) {
+          const clonedCheckbox = element.cloneNode(true);
+          clonedCheckbox.checked = true;
+          combinedForm.appendChild(clonedCheckbox);
+        } else if (element.value !== '') {
+          const clonedElement = element.cloneNode(true);
+          clonedElement.value = element.value;
+          combinedForm.appendChild(clonedElement);
+        }
+      });
+    });
+    combinedForm.style.display = 'none'
+    document.body.appendChild(combinedForm);
+    combinedForm.submit();
+  };
+  function submit_filter_forms() {
+    const form1 = document.getElementById("navForm");
+    const form2 = document.getElementById("filterSection");
+    combineForms(form1, form2);
+
+  }
+  function clearFilter(form) {
+    // Get references to the existing forms
+    // Usage
+    var inputNames = [];
+    form.reset()
+    Array.from(form.elements).forEach(element => {
+      if (element.hasAttribute("name")) {
+        inputNames.push(element.name);
+      }
+    })
+    urlParams = new URLSearchParams(window.location.search);
+    inputNames.forEach(element => {
+      urlParams.delete(element);
+    })
+    window.location.search = urlParams;
+  }
+  //  function filterByUrl(key, value) {
+  //     urlParams = new URLSearchParams(window.location.search);
+  //     urlParams.set(key, value);
+  //     console.log(urlParams.toString())
+  //     // window.location.search = urlParams;
+  // }
+
+  // window.addEventListener('DOMContentLoaded', (event) => {
+  //     const urlParams = new URLSearchParams(window.location.search);
+
+  //     // console.log(urlParams)
+  //     // searchedValue = urlParams.get('search_value')
+  //     // if (searchedValue){
+  //     //     $('#simple-search').val(searchedValue)
+  //     // }
+  // });
+
+  // function updateURLParams(form) {
+  //     const urlParams = new URLSearchParams(window.location.search);
+  //     // urlP = clearFilter(form)
+  //     // console.log(urlP.toString())
+  //     Array.from(form.elements).forEach(element => {
+  //         if (element.hasAttribute("name") && element.value) {
+  //             if (element.type == 'checkbox'){
+  //                 if (element.checked == true){
+  //                     const paramValue = urlParams.getAll(element.name);
+  //                     paramValue.push(element.value);
+  //                     urlParams.append(element.name, element.value);
+
+  //                 }
+  //             }else{
+  //                 urlParams.set(element.name, element.value);
+  //             }
+  //             console.log(element.name,element.value)
+  //         }
+  //     });
+  //     console.log(urlParams.toString())
+  //     // window.location.search = urlParams;
+  // }
+  // document.querySelector('#navForm').addEventListener('submit', e => {
+  //     e.preventDefault();
+  //     const navForm = e.target;
+  //     updateURLParams(navForm);
+  // });
+
+  // document.querySelector('#filterSection').addEventListener('submit', e => {
+  //     e.preventDefault();
+  //     const filterForm = e.target;
+  //     updateURLParams(filterForm);
+  // });
+
+  // const clearButton = document.querySelector('#clearButton');
+  //     clearButton.addEventListener('click', () => {
+  //     clearFilter();
+  // });
+
+  // Submit the new form
+</script>

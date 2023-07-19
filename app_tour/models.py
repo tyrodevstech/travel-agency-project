@@ -4,6 +4,8 @@ from ckeditor_uploader.fields import RichTextUploadingField
 
 # Create your models here.
 class TourLocationModel(models.Model):
+    country = CountryField()
+    district = models.CharField(max_length=122, null=True)
     location_name = models.CharField(max_length=225, null=True, verbose_name="location name")
     code = models.CharField(max_length=3, null=True)
 
@@ -21,8 +23,6 @@ class TourLocationModel(models.Model):
 class TourPackageModel(models.Model):
     package_title = models.CharField(max_length=525, null=True)
     tour_location = models.ForeignKey(TourLocationModel, on_delete=models.CASCADE, null=True, blank=True)
-    district = models.CharField(max_length=122, null=True)
-    country = CountryField()
     tour_duration = models.IntegerField(null=True, blank=True)
     peoples_limit = models.PositiveIntegerField(default=1, null=True, blank=True)
 

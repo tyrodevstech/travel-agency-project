@@ -99,14 +99,14 @@ class AirPlaneTicketModel(models.Model):
     def total_adult_price(self):
         return self.base_adult_fare + self.adult_tax
     
+    @property
     def get_ticket_price(self,passenger_type='adult'):
         base_price = self.base_price  # Base price for the ticket
         if passenger_type == 'child':
             base_price *= self.child_discount  # Apply a 25% discount for child passengers
         elif passenger_type == 'infant':
             base_price *= self.infant_discount  # Apply a 50% discount for infant passengers
-
-        ticket_price = base_price + (base_price * self.tax)
+        ticket_price = base_price + ((base_price * self.tax) / 100)
 
         return ticket_price
 

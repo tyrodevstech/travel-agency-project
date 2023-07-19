@@ -9,14 +9,17 @@ from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.models import User
 from django.contrib import messages
-
+from app_flight.filters import AirPlaneTicketFilters
 from app_main.forms import CustomUserForm, UserFeedbackForm
 from app_main.models import CustomUser
 # Create your views here.
 
 
 def index_view(request):
-    return render(request, 'app_main/index.html')
+    context = {
+        'filter': AirPlaneTicketFilters(request.GET,queryset=AirPlaneTicketModel.objects.all())
+    }
+    return render(request, 'app_main/index.html',context)
 
 def search_view(request):
     return render(request, 'app_main/search.html')

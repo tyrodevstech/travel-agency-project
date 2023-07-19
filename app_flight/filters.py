@@ -1,5 +1,6 @@
 import django_filters as filter
 from django_filters.widgets import RangeWidget
+from django_property_filter import PropertyRangeFilter,PropertyFilterSet
 from django import forms
 
 from app_flight.models import AirplaneModel, AirPlaneTicketModel, AirportModel
@@ -19,7 +20,7 @@ class DayNightFilter(filter.MultipleChoiceFilter):
             return qs.exclude(depart_time__gte="06:00:00", depart_time__lt="18:00:00")
         return qs
 
-class AirPlaneTicketFilters(filter.FilterSet):
+class AirPlaneTicketFilters(PropertyFilterSet):
     airplane = filter.ModelMultipleChoiceFilter(
         queryset=AirplaneModel.objects.all(),
         widget=CustomCheckboxSelectMultiple
@@ -29,8 +30,8 @@ class AirPlaneTicketFilters(filter.FilterSet):
         lookup_expr="exact",
         choices=(('day', 'day'), ('night', 'night'))
     )
-    ticket_price = filter.RangeFilter(
-        field_name='base_price',
+    ticket_price = PropertyRangeFilter(
+        field_name='get_ticket_price',
         label="Price",
         widget=CustomRangeWidget
     )
