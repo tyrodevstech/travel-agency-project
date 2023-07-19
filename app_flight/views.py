@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views.generic.list import ListView
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, FormView
 
 # from django_filters.views import FilterView
 
@@ -38,3 +38,7 @@ class AirPlaneTicketsListView(ListView):
 
 class AirPlaneTicketsDetailsView(TemplateView):
     template_name = 'app_flight/airplane_tickets.html'
+
+
+class AirPlaneTicketsPaymentsView(TemplateView):
+    template_name = 'app_flight/payment.html'
