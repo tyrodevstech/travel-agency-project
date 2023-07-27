@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
+{% load humanize %}
 {% load static %}
+{% load mathfilters %}
 {% block title %}Ticket Details {% endblock title %}
 
 {% block main %}
@@ -31,7 +33,7 @@
          <!-- flight short info -->
          <div class="mt-4 p-4 bg-white border border-gray-200 rounded-md drop-shadow-sm">
             <div class="flex justify-between items-center">
-               <p class="text-lg text-center text-blue-900 font-bold tracking-tight">DAC - CXB</p>
+               <p class="text-lg text-center text-blue-900 font-bold tracking-tight">{{ ticket.location_from.code }} - {{ ticket.location_to.code }}</p>
                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-file-info text-blue-900" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                   <path d="M14 3v4a1 1 0 0 0 1 1h4"></path>
@@ -42,26 +44,26 @@
             </div> <hr class="mt-4 border border-gray-400 border-t-0">
             <div class="mt-4 flex justify-between items-center">
                <div class="flex items-center gap-2">
-                  <img src="{% static 'images/test.png' %}" class="w-16 aspect-auto" alt="">
-                  <p class="text-md text-start font-normal tracking-tight">Biman Bangladesh Airlines<br>BG 437 | DH8</p>
+                  <img src="{% if ticket.airplane.airplane_logo %}{{ ticket.airplane.airplane_logo.url }}{% else %}https://storage.googleapis.com/gz-flight-prod-booking-data/carrier/logo/d31c6c3d-505d-4675-9b02-ecd9c2301115.png{% endif %}" class="w-16 aspect-auto" alt="">
+                  <p class="text-md text-start font-normal tracking-tight">{{ ticket.airplane.airplane_name }}<br>{{ ticket.airplane.airplane_model }} | BD71</p>
                </div>
-               <p class="text-md text-start font-medium tracking-tight">(Economy)</p>
+               <p class="text-md text-start font-medium tracking-tight">({{ ticket.flight_type }})</p>
             </div> <hr class="mt-4">
             <div class="mt-4 flex justify-between items-center gap-6">
                   <div class="flex flex-col p-2">
-                     <p class="text-lg text-gray-700 font-semibold">18:25</p>
-                     <p class="text-gray-500">Sun, 23 Jul, 2023</p>
-                     <p class="text-gray-500">DAC</p>
+                     <p class="text-lg text-gray-700 font-semibold">{{ ticket.depart_time }}</p>
+                     <p class="text-gray-500">{{ ticket.depart_date|date:"D, d M, Y" }}</p>
+                     <p class="text-gray-500">{{ ticket.location_from.code }}</p>
                   </div>
                   <div class="flex justify-center flex-col items-center">
                      <span class="opacity-60">Non Stop</span>
                      <img src="https://flightexpert.com/assets/img/non-stop-shape.png" alt="">
-                     <span>1h 15m</span>
+                     <span>{{ ticket.duration }}</span>
                   </div>
-                  <div class="flex flex-col flex-wrap p-2">
-                     <p class="text-lg text-gray-700 font-semibold">19:25</p>
-                     <p class="text-gray-500">Sun, 23 Jul, 2023</p>
-                     <p class="text-gray-500">CXB</p>
+                  <div class="flex flex-col items-end flex-wrap p-2">
+                     <p class="text-lg text-gray-700 font-semibold">{{ ticket.arrive_time }}</p>
+                     <p class="text-gray-500">{{ ticket.arrive_date|date:"D, d M, Y" }}</p>
+                     <p class="text-gray-500">{{ ticket.location_to.code }}</p>
                   </div>
             </div>
          </div>
@@ -96,13 +98,13 @@
 
             <div id="TabContent">
                   <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                     <p class="text-md font-normal text-gray-500 dark:text-gray-400">Flight: DAC-CXB, Cabin: 7 Kilograms, Check-in: 20 Kilograms</p>
+                     <p class="text-md font-normal text-gray-500 dark:text-gray-400">Flight: {{ ticket.location_from.code }}-{{ ticket.location_to.code }}, Cabin: {{ticket.baggage_cabin}} Kilograms, Check-in: {{ticket.baggage_checkin}} Kilograms</p>
                   </div>
                   <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="dashboard" role="tabpanel" aria-labelledby="dashboard-tab">
-                     <p class="text-md font-normal text-gray-500 dark:text-gray-400">Fare Summary: Adult x 1, Base Fare: BDT 3,774, Tax: BDT 925</p>
+                     <p class="text-md font-normal text-gray-500 dark:text-gray-400">Fare Summary: Adult x 1, Base Fare: BDT {{ticket.base_price|intcomma}}, Tax: BDT {% if ticket.tax|intcomma %}{{ticket.tax}}{% else %}0{% endif %}</p>
                   </div>
                   <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="settings" role="tabpanel" aria-labelledby="settings-tab">
-                     <p class="text-md font-normal text-gray-500 dark:text-gray-400">Cancellation: Refund Amount = Paid Amount - Airline's Cancellation Fee</p>
+                     <p class="text-md font-normal text-gray-500 dark:text-gray-400">{% if ticket.policy %}{{ ticket.policy|safe }}{% else %}No Content!{% endif %}</p>
                   </div>
             </div>
          </div>
@@ -203,7 +205,7 @@
             <p class="text-lg text-center font-semibold">Flight</p>
          </div> <hr class="mt-1">
 
-         <p class="mt-2 text-md text-center font-bold tracking-tight">DAC - CXB</p>
+         <p class="mt-2 text-md text-center font-bold tracking-tight">{{ ticket.location_from.code }} - {{ ticket.location_to.code }}</p>
          <p class="text-md text-center font-normal tracking-tight">On Way</p> <hr class="mt-2">
 
          <p class="mt-4 text-lg text-start text-blue-900 font-semibold tracking-tight">Fare Summary</p>
@@ -211,42 +213,48 @@
          <p class="mt-2 text-md text-start font-normal tracking-tight">Adult (1 traveler)</p>
          <div class="flex justify-between items-center">
             <p class="text-md font-normal tracking-tight">Base Fare</p>
-            <p class="text-md font-normal tracking-tight">BDT 3,774</p>
+            <p class="text-md font-normal tracking-tight">BDT {{ticket.base_price|intcomma}}</p>
          </div>
          <div class="flex justify-between items-center">
             <p class="text-md font-normal tracking-tight">Tax</p>
-            <p class="text-md font-normal tracking-tight">BDT 925</p>
+            <p class="text-md font-normal tracking-tight">BDT {{ticket.tax|intcomma}}</p>
          </div> <hr class="mt-2">
 
          <div class="flex justify-between items-center mt-2">
             <p class="text-md font-normal tracking-tight">Sub-Total</p>
-            <p class="text-md font-normal tracking-tight">BDT 4,699</p>
+            <p class="text-md font-normal tracking-tight">BDT {{ticket.base_price|add:ticket.tax|intcomma}}</p>
          </div>
+
+         {% if ticket.discount %}
          <div class="flex justify-between items-center">
             <div class="flex items-center gap-2">
                <p class="text-md font-normal tracking-tight">Discount</p>
-               <p class="px-3 py-1 opacity-70 text-sm font-semibold tracking-tight bg-yellow-200 rounded-md">5% off</p>
+               <p class="px-3 py-1 opacity-70 text-sm font-semibold tracking-tight bg-yellow-200 rounded-md">{{ticket.discount.amount}}% off</p>
             </div>
+            
             <div class="flex items-center gap-1">
                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-minusw-5 h-5 text-green-500" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                   <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"></path>
                   <path d="M9 12l6 0"></path>
                </svg>
-               <p class="text-md text-green-500 font-normal tracking-tight">BDT 415</p>
+               <p class="text-md text-green-500 font-normal tracking-tight">BDT {{ticket.get_ticket_discount_price}}</p>
             </div>
          </div>
+         {% endif %}
 
          <div class="mt-6 p-4 text-blue-900 bg-green-200 rounded-sm drop-shadow-md">
             <div class="flex justify-between items-center">
                <p class="text-lg font-semibold tracking-tight">You Pay (for 1 Traveler)</p>
-               <p class="text-lg font-semibold tracking-tight">BDT 4,374</p>
+               <p class="text-lg font-semibold tracking-tight">BDT {% if ticket.discount %}{{ticket.base_price|add:ticket.tax|get_pay_price:ticket.get_ticket_discount_price|intcomma}}{% else %}{{ticket.base_price|add:ticket.tax|intcomma}}{% endif %}</p>
             </div>
 
+            {% if ticket.discount %}
             <div class="flex justify-between items-center text-green-500">
                <p class="text-md font-normal tracking-tight">You Save 😊</p>
-               <p class="text-md font-normal tracking-tight">BDT 415</p>
+               <p class="text-md font-normal tracking-tight">BDT {{ticket.get_ticket_discount_price}}</p>
             </div>
+            {% endif %}
          </div>
       </div>
    </div>

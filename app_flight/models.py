@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from django_countries.fields import CountryField
+from ckeditor_uploader.fields import RichTextUploadingField
 
 # Create your models here.
 class AirportModel(models.Model):
@@ -88,6 +89,8 @@ class AirPlaneTicketModel(models.Model):
     arrive_date = models.DateField(default= timezone.now)
     arrive_time = models.TimeField(default= timezone.now)
 
+    policy = RichTextUploadingField(null=True, blank=True)
+
     def __str__(self):
         return f"{self.id}- {self.airplane.airplane_name} ({self.flight_type})"
 
@@ -98,6 +101,11 @@ class AirPlaneTicketModel(models.Model):
     
     def total_adult_price(self):
         return self.base_adult_fare + self.adult_tax
+
+
+    def get_ticket_discount_price(self):
+        if self.discount:
+            return (self.base_price / 100) * self.discount.amount
     
     @property
     def get_ticket_price(self,passenger_type='adult'):
