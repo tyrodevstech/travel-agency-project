@@ -1394,6 +1394,10 @@ input:checked + .toggle-bg {
   height: 0.75rem;
 }
 
+.h-3\.5 {
+  height: 0.875rem;
+}
+
 .h-4 {
   height: 1rem;
 }
@@ -1456,6 +1460,10 @@ input:checked + .toggle-bg {
 
 .w-3 {
   width: 0.75rem;
+}
+
+.w-3\.5 {
+  width: 0.875rem;
 }
 
 .w-4 {
@@ -2140,9 +2148,15 @@ input:checked + .toggle-bg {
   padding-bottom: 2rem;
 }
 
+<<<<<<< HEAD
 .py-10 {
   padding-top: 2.5rem;
   padding-bottom: 2.5rem;
+=======
+.py-12 {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+>>>>>>> devs
 }
 
 .\!pl-10 {
@@ -2646,7 +2660,6 @@ input[type='text']:focus,input[type='date']:focus {
 select {
   display: block;
   width: 100%;
-  max-width: 16rem;
   border-radius: 0.5rem;
   border-width: 1px;
   --tw-border-opacity: 1;
@@ -2747,6 +2760,10 @@ select:focus {
   --tw-ring-color: rgb(63 131 248 / var(--tw-ring-opacity));
 }
 
+#id_location_to, #id_location_from {
+  max-width: 16rem;
+}
+
 .last\:mb-0:last-child {
   margin-bottom: 0px;
 }
@@ -2784,6 +2801,11 @@ select:focus {
 .hover\:bg-green-700:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(4 108 78 / var(--tw-bg-opacity));
+}
+
+.hover\:bg-green-800:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(3 84 63 / var(--tw-bg-opacity));
 }
 
 .hover\:bg-red-200:hover {
@@ -3408,6 +3430,10 @@ select:focus {
 
   .md\:flex-row {
     flex-direction: row;
+  }
+
+  .md\:justify-between {
+    justify-content: space-between;
   }
 
   .md\:space-x-8 > :not([hidden]) ~ :not([hidden]) {

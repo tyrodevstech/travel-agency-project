@@ -1,13 +1,23 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
+from django.urls import reverse_lazy
 from django.views.generic.list import ListView
 from django.views.generic import TemplateView, FormView
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 
 # from django_filters.views import FilterView
 
 
 from app_flight.models import AirPlaneTicketModel
 from app_flight.filters import AirPlaneTicketFilters
+
+
+from app_main.forms import UserFeedbackForm
 # Create your views here.
+
+signin_decorators = [login_required(login_url="app_main:signin")]
+
+
 
 class AirPlaneTicketsListView(ListView):
     model = AirPlaneTicketModel
@@ -36,9 +46,25 @@ class AirPlaneTicketsListView(ListView):
 
         return context
 
-class AirPlaneTicketsDetailsView(TemplateView):
+
+
+
+@method_decorator(signin_decorators, name="dispatch")
+class AirPlaneTicketsDetailsView(FormView):
     template_name = 'app_flight/airplane_tickets.html'
+    form_class = UserFeedbackForm
+    # success_url = reverse_lazy("app_book:home")
 
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        pk = self.kwargs.get('pk')
+        context['ticket'] = get_object_or_404(AirPlaneTicketModel, id=pk)
+        return context
+
+
+
+
+@method_decorator(signin_decorators, name="dispatch")
 class AirPlaneTicketsPaymentsView(TemplateView):
     template_name = 'app_flight/payment.html'

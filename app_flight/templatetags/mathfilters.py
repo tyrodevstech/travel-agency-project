@@ -16,3 +16,8 @@ def sub(value, arg):
 def div(value, arg):
     "Divides the value by the arg"
     return int(value) / int(arg)
+
+
+@register.filter
+def get_pay_price(subtotal, discount_price):
+    return float(subtotal) - float(discount_price)
