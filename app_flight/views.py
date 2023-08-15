@@ -53,7 +53,7 @@ class AirPlaneTicketsListView(ListView):
 class AirPlaneTicketsDetailsView(FormView):
     template_name = 'app_flight/airplane_tickets.html'
     form_class = UserFeedbackForm
-    # success_url = reverse_lazy("app_book:home")
+    # success_url = reverse_lazy("app_main:home")
 
 
     def get_context_data(self, **kwargs):

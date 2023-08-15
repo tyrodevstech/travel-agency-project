@@ -21,3 +21,8 @@ def div(value, arg):
 @register.filter
 def get_pay_price(subtotal, discount_price):
     return float(subtotal) - float(discount_price)
+
+
+@register.filter
+def get_tour_discount_price(subtotal, discount_price):
+    return float(subtotal) - float(discount_price)

@@ -1,0 +1,148 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% load static %}
+{% block title %}Tour Payments {% endblock title %}
+
+{% block main %}
+
+<section class="container mt-6">
+    <div class="flex flex-col md:flex-row justify-between items-start gap-8 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+        <div class="w-full md:w-auto flex-1">
+            <div class="flex flex-wrap justify-between items-center">
+                <p class="text-lg font-bold">Tour Order Payment Confirmation</p>
+    
+                <div class="flex items-center gap-2">
+                   <p class="text-md text-gray-700 font-semibold">Tour Selection</p>
+    
+                   <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-right text-gray-600 w-4 h-4" width="20" height="20" viewBox="0 0 20 20" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                      <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                      <path d="M9 6l6 6l-6 6"></path>
+                   </svg>
+    
+                   <p class="text-md text-gray-700 font-semibold">Ordering</p>
+    
+                   <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-right text-gray-600 w-4 h-4" width="20" height="20" viewBox="0 0 20 20" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                      <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                      <path d="M9 6l6 6l-6 6"></path>
+                   </svg>
+    
+                   <p class="text-md text-gray-900 font-semibold">Payment</p>
+                </div>
+             </div>
+
+             <!-- tour short info -->
+            <div class="mt-4 p-8 bg-white border border-gray-200 rounded-md drop-shadow-sm">
+                <div class="flex justify-start items-center gap-4">
+                    <img src="{% static 'images/card-icons/visa.svg' %}" class="w-20 h-10" alt="">
+                    <img src="{% static 'images/card-icons/master.svg' %}" class="w-20 h-10" alt="">
+                    <img src="{% static 'images/card-icons/ae.svg' %}" class="w-20 h-10" alt="">
+                    <img src="{% static 'images/card-icons/db.svg' %}" class="w-20 h-10" alt="">
+                    <img src="{% static 'images/card-icons/up.svg' %}" class="w-20 h-10" alt="">
+                </div> <hr class="mt-6">
+
+                <p class="mt-8 text-md font-normal">Enter first 6 digits of your card</p>
+                <div class="flex items-center gap-2">
+                    <p class="text-md text-start font-normal tracking-tight">This is collected to check the eligibility of discount for a card</p>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-info-square-rounded w-5 h-5 opacity-60" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                        <path d="M12 9h.01"></path>
+                        <path d="M11 12h1v4h1"></path>
+                        <path d="M12 3c7.2 0 9 1.8 9 9s-1.8 9 -9 9s-9 -1.8 -9 -9s1.8 -9 9 -9z"></path>
+                     </svg>
+                </div>
+
+                <p class="mt-6 text-lg text-start text-blue-900 font-bold tracking-tight">Card Details</p>
+                <form class="mt-4" method="POST">
+                  {% csrf_token %}
+                    <div class="mt-4 grid gap-6 md:grid-cols-2">
+                        <div>
+                            <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">(Full name as displayed on card)*</label>
+                            {{ form.user_card_name }}
+                        </div>
+                        <div>
+                            <label for="card_number" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Card Number *</label>
+                            {{ form.user_card_number }}
+                        </div>
+      
+                        <div>
+                           <label for="cvc" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">CVC *
+                           </label>
+                           {{ form.user_cvc_number }}
+                        </div>  
+                        <div>
+                            <label for="code" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Postal / ZIP code (optional)</label>
+                            {{ form.user_postal_code }}
+                        </div>
+                     </div>
+
+                     <button type="submit" class="mt-6 focus:outline-none text-blue-900 bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-semibold rounded-lg text-md px-5 py-2.5 mr-2 dark:focus:ring-yellow-900">Add Payment</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- tour pay info casd Summary -->
+        <div class="w-full md:w-1/3 mt-2 md:mt-0 p-4 bg-white border border-gray-200 rounded-md drop-shadow-sm md:sticky md:top-28">
+            <div class="flex justify-center items-center gap-1">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-photo-filled text-gray-800" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                    <path d="M8.813 11.612c.457 -.38 .918 -.38 1.386 .011l.108 .098l4.986 4.986l.094 .083a1 1 0 0 0 1.403 -1.403l-.083 -.094l-1.292 -1.293l.292 -.293l.106 -.095c.457 -.38 .918 -.38 1.386 .011l.108 .098l4.674 4.675a4 4 0 0 1 -3.775 3.599l-.206 .005h-12a4 4 0 0 1 -3.98 -3.603l6.687 -6.69l.106 -.095zm9.187 -9.612a4 4 0 0 1 3.995 3.8l.005 .2v9.585l-3.293 -3.292l-.15 -.137c-1.256 -1.095 -2.85 -1.097 -4.096 -.017l-.154 .14l-.307 .306l-2.293 -2.292l-.15 -.137c-1.256 -1.095 -2.85 -1.097 -4.096 -.017l-.154 .14l-5.307 5.306v-9.585a4 4 0 0 1 3.8 -3.995l.2 -.005h12zm-2.99 5l-.127 .007a1 1 0 0 0 0 1.986l.117 .007l.127 -.007a1 1 0 0 0 0 -1.986l-.117 -.007z" stroke-width="0" fill="currentColor"></path>
+                 </svg>
+                <p class="text-lg text-center font-semibold">Tour</p>
+             </div> <hr class="mt-1">
+    
+             <p class="mt-2 text-md text-center font-bold tracking-tight">{{ order_obj.package.package_title }}</p>
+             <p class="text-md text-center font-normal tracking-tight">- enjoy with nature -</p> <hr class="mt-2">
+    
+             <p class="mt-4 text-lg text-start text-blue-900 font-semibold tracking-tight">Tour Pay Summary</p>
+    
+             <p class="mt-2 text-md text-start font-normal tracking-tight mb-1">Traveler ({{ total_traveler }} people)</p>
+             <div class="flex justify-between items-center">
+                <p class="text-md font-normal tracking-tight">Adults Fare</p>
+                <p class="text-md font-normal tracking-tight">BDT {{ adults_fare|intcomma }}</p>
+             </div>
+             <div class="flex justify-between items-center">
+                <p class="text-md font-normal tracking-tight">Childrens Fare</p>
+                <p class="text-md font-normal tracking-tight">BDT {{ childrens_fare|intcomma }}</p>
+             </div>
+             <div class="flex justify-between items-center">
+                <p class="text-md font-normal tracking-tight">Infants Fare</p>
+                <p class="text-md font-normal tracking-tight">BDT {{ infants_fare|intcomma }}</p>
+             </div> <hr class="mt-2">
+    
+             <div class="flex justify-between items-center mt-2">
+                <p class="text-md font-normal tracking-tight">Sub-Total</p>
+                <p class="text-md font-normal tracking-tight">BDT {{ sub_total|intcomma }}</p>
+             </div>
+             <div class="flex justify-between items-center">
+                <div class="flex items-center gap-2">
+                   <p class="text-md font-normal tracking-tight">Discount </p>
+                   <p class="px-3 py-1 opacity-70 text-sm font-semibold tracking-tight bg-yellow-200 rounded-md">{{ order_obj.package.discount.amount }}% off</p>
+                </div>
+                
+                <div class="flex items-center gap-1">
+                   <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-minusw-5 h-5 text-green-500" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                      <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                      <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"></path>
+                      <path d="M9 12l6 0"></path>
+                   </svg>
+                   <p class="text-md text-green-500 font-normal tracking-tight">BDT {{ discount_price }}</p>
+                </div>
+             </div>
+             <p class="text-sm font-normal text-green-500 tracking-tight">( discount '%' on sub-total price )</p>
+    
+             <div class="mt-6 p-4 text-blue-900 bg-green-200 rounded-sm drop-shadow-md">
+                <div class="flex justify-between items-center">
+                   <p class="text-lg font-semibold tracking-tight">You Pay (for {{ total_traveler }} people)</p>
+                   <p class="text-lg font-semibold tracking-tight">BDT {{ total_fare }}</p>
+                </div>
+    
+                <div class="flex justify-between items-center text-green-500">
+                   <p class="text-md font-normal tracking-tight">You Save 😊</p>
+                   <p class="text-md font-normal tracking-tight">BDT {{ discount_price }}</p>
+                </div>
+             </div>
+        </div>
+    </div>
+</section>
+
+{% endblock main %}

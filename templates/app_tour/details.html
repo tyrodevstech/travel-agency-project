@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
+{% load humanize %}
 {% load static %}
-{% block title %}Home {% endblock title %}
+{% load mathfilters %}
+{% block title %}Tour Details {% endblock title %}
 
 
 {% block main %}
@@ -19,26 +21,21 @@
     <div id="controls-carousel" class="relative w-full drop-shadow-lg my-4" data-carousel="static">
         <!-- Carousel wrapper -->
         <div class="relative h-56 overflow-hidden rounded-lg md:h-96">
-            <!-- Item 1 -->
+            {% if sliders %}
+            <!-- Items -->
+
+            {% for slider in sliders %}
+            <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                <img src="{{ slider.image.url }}" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
+            </div>
+            {% endfor %}
+
+            {% else %}
+            <!-- Defult Slider Item -->
             <div class="hidden duration-700 ease-in-out" data-carousel-item>
                 <img src="{% static 'images/slider.jpeg' %}" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
             </div>
-            <!-- Item 2 -->
-            <div class="hidden duration-700 ease-in-out" data-carousel-item="active">
-                <img src="{% static 'images/slider.jpeg' %}" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
-            </div>
-            <!-- Item 3 -->
-            <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                <img src="{% static 'images/slider.jpeg' %}" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
-            </div>
-            <!-- Item 4 -->
-            <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                <img src="{% static 'images/slider.jpeg' %}" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
-            </div>
-            <!-- Item 5 -->
-            <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                <img src="{% static 'images/slider.jpeg' %}" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
-            </div>
+            {% endif %}
         </div>
         <!-- Slider controls -->
         <button type="button" class="absolute top-0 left-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-prev>
@@ -58,7 +55,7 @@
     <!-- title & info section -->
     <div class="p-6 bg-white border border-gray-200 rounded-lg drop-shadow-lg dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
         
-        <h5 class="mb-2 text-2xl font-bold  text-gray-900 dark:text-white">Joltarongo - House Boat experience in Tanguar Haor</h5> <hr class="mb-2">
+        <h5 class="mb-2 text-2xl font-bold  text-gray-900 dark:text-white">{{ tour_package.package_title }}</h5> <hr class="mb-2">
 
        <div class="flex flex-wrap items-center gap-6">
             <div class="flex flex-row items-center gap-1">
@@ -66,7 +63,7 @@
                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                     <path d="M18.364 4.636a9 9 0 0 1 .203 12.519l-.203 .21l-4.243 4.242a3 3 0 0 1 -4.097 .135l-.144 -.135l-4.244 -4.243a9 9 0 0 1 12.728 -12.728zm-6.364 3.364a3 3 0 1 0 0 6a3 3 0 0 0 0 -6z" stroke-width="0" fill="currentColor"></path>
                 </svg>
-                <p class="text-md tracking-tight font-medium lowercase">sunamganj, bd</p>
+                <p class="text-md tracking-tight font-medium lowercase">{{ tour_package.tour_location.district }}, {{ tour_package.tour_location.country }}</p>
             </div>
 
             <div class="flex flex-row items-center gap-1">
@@ -74,7 +71,7 @@
                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                     <path d="M17 3.34a10 10 0 1 1 -14.995 8.984l-.005 -.324l.005 -.324a10 10 0 0 1 14.995 -8.336zm-5 2.66a1 1 0 0 0 -.993 .883l-.007 .117v5l.009 .131a1 1 0 0 0 .197 .477l.087 .1l3 3l.094 .082a1 1 0 0 0 1.226 0l.094 -.083l.083 -.094a1 1 0 0 0 0 -1.226l-.083 -.094l-2.707 -2.708v-4.585l-.007 -.117a1 1 0 0 0 -.993 -.883z" stroke-width="0" fill="currentColor"></path>
                 </svg>
-                <p class="text-md font-normal tracking-tighter">2 days</p>
+                <p class="text-md font-normal tracking-tighter">{{ tour_package.tour_duration }} days</p>
             </div>
 
             <div class="flex flex-row items-center gap-1">
@@ -87,7 +84,7 @@
                     <path d="M5 5a2 2 0 1 0 4 0a2 2 0 0 0 -4 0"></path>
                     <path d="M3 13v-1a2 2 0 0 1 2 -2h2"></path>
                 </svg>
-                <p class="text-md font-normal tracking-tighter">From 1 to 24 people</p>
+                <p class="text-md font-normal tracking-tighter">From 1 to {{ tour_package.peoples_limit }} people</p>
             </div>
 
             <div class="flex flex-row items-center gap-1">
@@ -114,14 +111,14 @@
                 </div>
         
                 <div class="flex flex-row items-center gap-2 py-1 px-3 bg-slate-200 w-max rounded-sm">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-sailboat opacity-70" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-heart-handshake opacity-70" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                         <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                        <path d="M2 20a2.4 2.4 0 0 0 2 1a2.4 2.4 0 0 0 2 -1a2.4 2.4 0 0 1 2 -1a2.4 2.4 0 0 1 2 1a2.4 2.4 0 0 0 2 1a2.4 2.4 0 0 0 2 -1a2.4 2.4 0 0 1 2 -1a2.4 2.4 0 0 1 2 1a2.4 2.4 0 0 0 2 1a2.4 2.4 0 0 0 2 -1"></path>
-                        <path d="M4 18l-1 -3h18l-1 3"></path>
-                        <path d="M11 12h7l-7 -9v9"></path>
-                        <path d="M8 7l-2 5"></path>
+                        <path d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572"></path>
+                        <path d="M12 6l-3.293 3.293a1 1 0 0 0 0 1.414l.543 .543c.69 .69 1.81 .69 2.5 0l1 -1a3.182 3.182 0 0 1 4.5 0l2.25 2.25"></path>
+                        <path d="M12.5 15.5l2 2"></path>
+                        <path d="M15 13l2 2"></path>
                      </svg>
-                    <p class="tracking-tighter text-md font-medium">Boat Rental</p>
+                    <p class="tracking-tighter text-md font-medium">Friendly Tours</p>
                 </div>
             </div>
        </div>
@@ -148,32 +145,38 @@
 
             <div id="TabContent">
                 <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                    <p class="text-xl font-semibold text-gray-500 dark:text-gray-400">Tour details section.</p>
+                    <p class="text-xl font-semibold text-gray-500 dark:text-gray-400">{{ tour_package.details|safe }}</p>
                 </div>
                 <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="dashboard" role="tabpanel" aria-labelledby="dashboard-tab">
-                    <p class="text-xl font-semibold text-gray-500 dark:text-gray-400">Tour options section.</p>
+                    <p class="text-xl font-semibold text-gray-500 dark:text-gray-400">{{ tour_package.options|safe }}</p>
                 </div>
                 <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="settings" role="tabpanel" aria-labelledby="settings-tab">
-                    <p class="text-xl font-semibold text-gray-500 dark:text-gray-400">Tour policy section</p>
+                    <p class="text-xl font-semibold text-gray-500 dark:text-gray-400">{{ tour_package.policy|safe }}</p>
                 </div>
             </div>
 
         </div>
 
         <div class="w-full md:w-[30%] mt-6 md:mt-0 p-4 bg-white border border-gray-200 rounded-lg drop-shadow-lg">
-            <form action="" method="">
-                <div class="relative max-w-md">
+            <form method="POST">
+                {% csrf_token %} 
+                <label for="city" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select Journey Date</label>
+                <div class="relative mb-2">
                     <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                    <svg aria-hidden="true" class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevrons-right text-gray-500 dark:text-gray-400" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                            <path d="M7 7l5 5l-5 5"></path>
+                            <path d="M13 7l5 5l-5 5"></path>
+                         </svg>                     
                     </div>
-                    <input datepicker type="text" class="py-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full !pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Select Journey Date" required>
+                    {{ form.journey_date }}
                 </div>
 
                 <div class="my-4">
                     <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Add Travelers</label>
-                    <input type="number" id="adult" class="py-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Adult" required>
-                    <input type="number" id="adult" class="mt-2 py-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Children" required>
-                    <input type="number" id="adult" class="mt-2 py-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Infant" required>
+                    {{ form.adult_traveler }}
+                    {{ form.child_traveler }}
+                    {{ form.infant_traveler }}
                 </div>
 
                 <div class="relative max-w-md my-2">
@@ -186,17 +189,22 @@
                             <path d="M9.5 14.5l1.5 1.5l3 -3"></path>
                         </svg>
                     </div>
-                    <select id="countries" class="py-4 pl-10 bg-gray-50 border border-gray-300 text-gray-900 text-md font-normal rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+                    <select id="countries" name="hotel_name" class="py-4 pl-10 bg-gray-50 border border-gray-300 text-gray-900 text-md font-normal rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
                         <option selected>Select Hotel</option>
-                        <option value="US">Heen Hotel</option>
-                        <option value="CA">Green View Hotel</option>
+                        {% for hotel in tour_package.hotel.all %}
+                            <option value="{{ hotel.hotel_name }}">{{ hotel.hotel_name }}</option>
+                        {% endfor %}
                     </select>
                 </div>
                 
 
                 <h5 class="mt-4 mb-2 text-md text-center font-normal ">Starting From</h5>
-                <h5 class="mb-2 text-md text-center font-medium line-through">BDT 4,000 ৳</h5>
-                <h5 class="mb-2 text-lg text-center font-semibold">BDT 3,800 ৳</h5>
+                {% if tour_package.discount %}
+                <h5 class="mb-2 text-md text-center font-medium line-through">BDT {{ tour_package.package_price|intcomma }} ৳</h5>
+                <h5 class="mb-2 text-lg text-center font-semibold">BDT {{ tour_package.package_price|get_tour_discount_price:tour_package.get_discount_price|intcomma }} ৳</h5>
+                {% else %}
+                <h5 class="mb-2 text-md text-center font-medium">BDT {{ tour_package.package_price|intcomma }} ৳</h5>
+                {% endif %}
 
                 <button type="submit" class="w-full text-blue-700 bg-yellow-300 hover:bg-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-300 font-semibold rounded-md text-md px-5 py-2.5 text-center mr-2 mt-4">Continue</button>
             </form>
@@ -204,18 +212,21 @@
 
     </div>
 
+    {% if tour_package.hotel %}
     <!-- hotel cards  -->
     <div class="swiper card_slider">
         <div class="swiper-wrapper py-12">
+
+            {% for hotel in tour_package.hotel.all %}
             <div class="swiper-slide">
 
                 <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700" data-carousel-item>
-                    <img class="rounded-t-lg" src="{% static 'images/hotel.jpg' %}" alt="" />
+                    <img class="rounded-t-lg" src="{{ hotel.cover_image.url }}" alt="" />
                     <div class="p-4">
-                        <a href="#">
-                            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Hotel Joyful Groud</h5>
+                        <a href="{{ hotel.link }}" target="_blank">
+                            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ hotel.hotel_name }}</h5>
                         </a>
-                        <a href="#" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-green-700 rounded-lg hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
+                        <a href="{{ hotel.link }}" target="_blank" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-green-700 rounded-lg hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
                             Hotel Details
                             <svg class="w-3.5 h-3.5 ml-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
@@ -225,105 +236,12 @@
                 </div>
 
             </div>
-
-            <div class="swiper-slide">
-
-                <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700" data-carousel-item>
-                    <img class="rounded-t-lg" src="{% static 'images/hotel.jpg' %}" alt="" />
-                    <div class="p-4">
-                        <a href="#">
-                            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Hotel Joyful Groud</h5>
-                        </a>
-                        <a href="#" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-green-700 rounded-lg hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
-                            Hotel Details
-                            <svg class="w-3.5 h-3.5 ml-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
-                            </svg>
-                        </a>
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="swiper-slide">
-
-                <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700" data-carousel-item>
-                    <img class="rounded-t-lg" src="{% static 'images/hotel.jpg' %}" alt="" />
-                    <div class="p-4">
-                        <a href="#">
-                            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Hotel Joyful Groud</h5>
-                        </a>
-                        <a href="#" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-green-700 rounded-lg hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
-                            Hotel Details
-                            <svg class="w-3.5 h-3.5 ml-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
-                            </svg>
-                        </a>
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="swiper-slide">
-
-                <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700" data-carousel-item>
-                    <img class="rounded-t-lg" src="{% static 'images/hotel.jpg' %}" alt="" />
-                    <div class="p-4">
-                        <a href="#">
-                            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Hotel Joyful Groud</h5>
-                        </a>
-                        <a href="#" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-green-700 rounded-lg hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
-                            Hotel Details
-                            <svg class="w-3.5 h-3.5 ml-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
-                            </svg>
-                        </a>
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="swiper-slide">
-
-                <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700" data-carousel-item>
-                    <img class="rounded-t-lg" src="{% static 'images/hotel.jpg' %}" alt="" />
-                    <div class="p-4">
-                        <a href="#">
-                            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Hotel Joyful Groud</h5>
-                        </a>
-                        <a href="#" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-green-700 rounded-lg hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
-                            Hotel Details
-                            <svg class="w-3.5 h-3.5 ml-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
-                            </svg>
-                        </a>
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="swiper-slide">
-
-                <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700" data-carousel-item>
-                    <img class="rounded-t-lg" src="{% static 'images/hotel.jpg' %}" alt="" />
-                    <div class="p-4">
-                        <a href="#">
-                            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Hotel Joyful Groud</h5>
-                        </a>
-                        <a href="#" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-green-700 rounded-lg hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
-                            Hotel Details
-                            <svg class="w-3.5 h-3.5 ml-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
-                            </svg>
-                        </a>
-                    </div>
-                </div>
-
-            </div>
+            {% endfor %}
             
         </div>
         <div class="swiper-pagination"></div>
     </div>
+    {% endif %}
 
     
 
