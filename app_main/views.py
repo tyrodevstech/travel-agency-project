@@ -148,9 +148,7 @@ def user_feedback_view(request):
 
     return render(request, "app_main/feedback.html", {"form": form})
 
-    context = {
-        "filter": AirPlaneTicketFilters(
-            request.GET, queryset=AirplaneTicket.objects.all()
-        )
-    }
-    return render(request, "app_main/index.html", context)
+
+
+def custom_page_not_found_view(request, exception=None):
+    return render(request, "404.html", {})

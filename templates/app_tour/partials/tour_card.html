@@ -1,20 +1,22 @@
+{% load humanize %}
 {% load static %}
+{% load mathfilters %}
 
-<a href="{% url 'app_tour:tour_details' %}" class="flex flex-1 flex-col shadow-sm bg-white border border-gray-200 rounded-lg md:flex-row hover:shadow-md transition-all dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
+<a href="{% url 'app_tour:tour_details' tour.id  %}" class="flex flex-1 flex-col shadow-sm bg-white border border-gray-200 rounded-lg md:flex-row hover:shadow-md transition-all dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
 
     
-    <img class="object-cover w-1/5 rounded-t-lg  md:rounded-none md:rounded-l-lg" src="{% static 'images/theme.jpg' %}" alt="">
+    <img class="object-cover w-1/5 rounded-t-lg  md:rounded-none md:rounded-l-lg" src="{% if tour.package_cover_image %}{{ tour.package_cover_image.url }}{% else %}{% static 'images/theme.jpg' %}{% endif %}" alt="">
 
     <div class="flex flex-1">
         <div class="flex flex-1 flex-col justify-between p-4 leading-normal">
-            <h5 class="mb-2 text-xl font-bold  text-gray-900 dark:text-white">Joltarongo - House Boat experience in Tanguar Haor</h5>
+            <h5 class="mb-2 text-xl font-bold  text-gray-900 dark:text-white">{{ tour.package_title }}</h5>
             
             <div class="flex flex-row items-center gap-1">
                 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-map-pin-filled opacity-60" width="18" height="18" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                     <path d="M18.364 4.636a9 9 0 0 1 .203 12.519l-.203 .21l-4.243 4.242a3 3 0 0 1 -4.097 .135l-.144 -.135l-4.244 -4.243a9 9 0 0 1 12.728 -12.728zm-6.364 3.364a3 3 0 1 0 0 6a3 3 0 0 0 0 -6z" stroke-width="0" fill="currentColor"></path>
                 </svg>
-                <p class="text-md tracking-tight font-medium lowercase">sunamganj</p>
+                <p class="text-md tracking-tight font-medium lowercase">{% if tour.tour_location %}{{ tour.tour_location.district }}{% else %}outdoor{% endif %}</p>
             </div>
 
             <div class=" flex items-center gap-4 mt-12">
@@ -23,7 +25,7 @@
                         <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                         <path d="M17 3.34a10 10 0 1 1 -14.995 8.984l-.005 -.324l.005 -.324a10 10 0 0 1 14.995 -8.336zm-5 2.66a1 1 0 0 0 -.993 .883l-.007 .117v5l.009 .131a1 1 0 0 0 .197 .477l.087 .1l3 3l.094 .082a1 1 0 0 0 1.226 0l.094 -.083l.083 -.094a1 1 0 0 0 0 -1.226l-.083 -.094l-2.707 -2.708v-4.585l-.007 -.117a1 1 0 0 0 -.993 -.883z" stroke-width="0" fill="currentColor"></path>
                     </svg>
-                    <p class="text-md font-normal tracking-tighter">2 days</p>
+                    <p class="text-md font-normal tracking-tighter">{{ tour.tour_duration }} days</p>
                 </div>
         
                 <div class="flex flex-row items-center gap-1 text-gray-500 dark:text-white">
@@ -36,7 +38,7 @@
                         <path d="M5 5a2 2 0 1 0 4 0a2 2 0 0 0 -4 0"></path>
                         <path d="M3 13v-1a2 2 0 0 1 2 -2h2"></path>
                     </svg>
-                    <p class="text-md font-normal tracking-tighter">From 1 to 24 people</p>
+                    <p class="text-md font-normal tracking-tighter">From 1 to {{ tour.peoples_limit }} people</p>
                 </div>
             </div>
 
@@ -64,25 +66,29 @@
                 </div>
         
                 <div class="flex flex-row items-center gap-2 py-1 px-3 bg-slate-200 w-max rounded-sm">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-sailboat opacity-70" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-heart-handshake opacity-70" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                         <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                        <path d="M2 20a2.4 2.4 0 0 0 2 1a2.4 2.4 0 0 0 2 -1a2.4 2.4 0 0 1 2 -1a2.4 2.4 0 0 1 2 1a2.4 2.4 0 0 0 2 1a2.4 2.4 0 0 0 2 -1a2.4 2.4 0 0 1 2 -1a2.4 2.4 0 0 1 2 1a2.4 2.4 0 0 0 2 1a2.4 2.4 0 0 0 2 -1"></path>
-                        <path d="M4 18l-1 -3h18l-1 3"></path>
-                        <path d="M11 12h7l-7 -9v9"></path>
-                        <path d="M8 7l-2 5"></path>
-                    </svg>
-                    <p class="tracking-tighter text-md font-medium">Boat Rental</p>
+                        <path d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572"></path>
+                        <path d="M12 6l-3.293 3.293a1 1 0 0 0 0 1.414l.543 .543c.69 .69 1.81 .69 2.5 0l1 -1a3.182 3.182 0 0 1 4.5 0l2.25 2.25"></path>
+                        <path d="M12.5 15.5l2 2"></path>
+                        <path d="M15 13l2 2"></path>
+                     </svg>
+                    <p class="tracking-tighter text-md font-medium">Friendly Tours</p>
                 </div>
             </div>
 
         </div>
 
-        <div class="flex flex-col justify-between p-4 text-right text-gray-900 dark:text-white leading-6 w-1/5">
+        <div class="flex flex-col justify-between p-4 text-right text-gray-900 dark:text-white leading-6 w-[22%]">
             <h5 class="mb-2 text-sm  font-normal ">Starting From</h5>
-            <h5 class="mb-2 text-md font-medium line-through">BDT 4,000 ৳</h5>
-            <h5 class="mb-2 text-xl font-semibold">BDT 3,800 ৳</h5>
-            <h5 class="mb-2 text-sm  font-light">Per Person</h5>
-            <span class="py-1 px-3 ml-auto bg-slate-200 flex-none inline-block w-max text-sm font-medium text-center rounded-md">5% off</span>
+            {% if tour.discount %}
+            <h5 class="mb-2 text-md font-medium line-through">BDT {{ tour.package_price|intcomma }} ৳</h5>
+            <h5 class="mb-2 text-xl font-semibold">BDT {{ tour.package_price|get_tour_discount_price:tour.get_discount_price|intcomma }} ৳</h5>
+            {% else %}
+            <h5 class="mb-2 text-md font-medium">BDT {{ tour.package_price|intcomma }} ৳</h5>
+            {% endif %}
+            <h5 class="mb-2 mr-2 text-sm  font-light">Per Person</h5>
+            <span class="py-1 px-3 ml-auto bg-slate-200 flex-none inline-block w-max text-sm font-medium text-center rounded-md">{% if tour.discount %}{{ tour.discount.amount }}% off{% else %}No Discount{% endif %}</span>
         </div>
     </div>
     
