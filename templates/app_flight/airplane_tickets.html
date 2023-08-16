@@ -109,89 +109,17 @@
             </div>
          </div>
 
-         <!-- flight traveller details -->
-         <div class="mt-4 mb-8 p-4 bg-white border border-gray-200 rounded-md drop-shadow-sm">
-            <div class="flex justify-between items-center">
-               <p class="text-lg text-center text-blue-900 font-bold tracking-tight">Traveller Details</p>
-               <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-pencil text-blue-900" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                  <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                  <path d="M4 20h4l10.5 -10.5a1.5 1.5 0 0 0 -4 -4l-10.5 10.5v4"></path>
-                  <path d="M13.5 6.5l4 4"></path>
-               </svg>
-            </div> <hr class="mt-4 border border-gray-400 border-t-0">
-
-            <div class="mt-4 flex items-center gap-1 text-gray-600">
-               <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-info-square-rounded w-5 h-5" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                  <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                  <path d="M12 9h.01"></path>
-                  <path d="M11 12h1v4h1"></path>
-                  <path d="M12 3c7.2 0 9 1.8 9 9s-1.8 9 -9 9s-9 -1.8 -9 -9s1.8 -9 9 -9z"></path>
-               </svg>
-               <p class="text-md font-normal tracking-tight">As mentioned on your passport or government approved IDs</p>
-            </div>
-
-            <form class="mt-6" method="POST" action=""> 
-               <div class="mt-4 grid gap-6 md:grid-cols-2">
-                  <div>
-                     <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select Title</label>
-                     <select id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
-                        <option selected>MR.</option>
-                        <option value="US">MS.</option>
-                        <option value="CA">MRS.</option>
-                     </select>
-                  </div>
-               </div> 
-
-               <div class="mt-4 grid gap-6 md:grid-cols-2">
-                  <div>
-                      <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">First name</label>
-                      <input type="text" id="first_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="John" required>
-                  </div>
-                  <div>
-                      <label for="last_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Last name</label>
-                      <input type="text" id="last_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Doe" required>
-                  </div>
-
-                  <div>
-                     <label for="nationality" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nationality
-                     </label>
-                     <select id="nationality" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                        <option selected>Bangladesh</option>
-                        <option value="US">Canada</option>
-                     </select>
-                  </div>  
-                  <div>
-                      <label for="age" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Age</label>
-                      <input type="number" min="0" id="age" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="27" required>
-                  </div>
-               </div> <hr class="mt-8">
-
-               <p class="mt-2 text-lg text-start text-blue-900 font-bold tracking-tight">Contact Details</p>
-               <div class="mt-1 flex items-center gap-1 text-gray-600">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-info-square-rounded w-5 h-5" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                     <path d="M12 9h.01"></path>
-                     <path d="M11 12h1v4h1"></path>
-                     <path d="M12 3c7.2 0 9 1.8 9 9s-1.8 9 -9 9s-9 -1.8 -9 -9s1.8 -9 9 -9z"></path>
-                  </svg>
-                  <p class="text-md font-normal tracking-tight"> Receive booking confirmation & updates</p>
-               </div>
-
-               <div class="mt-6 grid gap-6 md:grid-cols-2">
-                  <div>
-                      <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
-                      <input type="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@website.com" required>
-                  </div>
-                  <div>
-                      <label for="phone" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Phone</label>
-                      <input type="tel" id="phone" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="01XXX XXXXXX" required>
-                  </div>
-              </div>
-
-              <button type="submit" class="mt-8 focus:outline-none text-blue-900 bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-semibold rounded-lg text-md w-full px-5 py-2.5 mr-2 mb-2 dark:focus:ring-yellow-900">Continue</button>
-            </form>
-         </div>
-
+         <!-- flight traveler details -->
+         <form method="post">
+            {% csrf_token %}
+            {% for formset in order_flight_forms %}
+               {{formset.management_form}}
+               {% for form in formset %}
+                  {% include 'app_flight/partials/passenger_details.html' with form=form category=formset.prefix %}
+               {% endfor %}
+            {% endfor %}
+            <button type="submit" class="focus:outline-none text-blue-900 bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-semibold rounded-lg text-md w-full px-5 py-2.5 mr-2 mb-2 dark:focus:ring-yellow-900">Continue</button>
+        </form>
       </div>
 
       <!-- Flight casd Summary -->
@@ -208,23 +136,21 @@
          <p class="mt-2 text-md text-center font-bold tracking-tight">{{ ticket.location_from.code }} - {{ ticket.location_to.code }}</p>
          <p class="text-md text-center font-normal tracking-tight">On Way</p> <hr class="mt-2">
 
-         <p class="mt-4 text-lg text-start text-blue-900 font-semibold tracking-tight">Fare Summary</p>
+         <p class="mt-4 text-lg text-start text-blue-900 font-semibold tracking-tight mb-3">Fare Summary</p>
 
-         <p class="mt-2 text-md text-start font-normal tracking-tight">Adult (1 traveler)</p>
-         <div class="flex justify-between items-center">
-            <p class="text-md font-normal tracking-tight">Base Fare</p>
-            <p class="text-md font-normal tracking-tight">BDT {{ticket.base_price|intcomma}}</p>
+         {% for item in amount_infos %}
+         <div class="flex justify-between items-center mb-1">
+            <p class="text-sm font-normal tracking-tight">{{item.type|capfirst}} ({{item.count}} traveler)</p>
+            <p class="text-sm font-normal tracking-tight">BDT <span class="text-base font-semibold">{{item.amount|intcomma}}</span></p>
          </div>
-         <div class="flex justify-between items-center">
-            <p class="text-md font-normal tracking-tight">Tax</p>
-            <p class="text-md font-normal tracking-tight">BDT {{ticket.tax|intcomma}}</p>
-         </div> <hr class="mt-2">
+         {% endfor %}
+         <hr class="mt-2">
 
          <div class="flex justify-between items-center mt-2">
             <p class="text-md font-normal tracking-tight">Sub-Total</p>
-            <p class="text-md font-normal tracking-tight">BDT {{ticket.base_price|add:ticket.tax|intcomma}}</p>
+            <p class="text-md font-normal tracking-tight">BDT {{total_amount|intcomma}}</p>
          </div>
-
+         {% with ticket|apply_discount:total_amount as discount_amount %}
          {% if ticket.discount %}
          <div class="flex justify-between items-center">
             <div class="flex items-center gap-2">
@@ -238,24 +164,25 @@
                   <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"></path>
                   <path d="M9 12l6 0"></path>
                </svg>
-               <p class="text-md text-green-500 font-normal tracking-tight">BDT {{ticket.get_ticket_discount_price}}</p>
+               <p class="text-md text-green-500 font-normal tracking-tight">BDT {{discount_amount}}</p>
             </div>
          </div>
          {% endif %}
 
-         <div class="mt-6 p-4 text-blue-900 bg-green-200 rounded-sm drop-shadow-md">
+         <div class="mt-6 p-4 text-blue-900 bg-green-100 rounded">
             <div class="flex justify-between items-center">
-               <p class="text-lg font-semibold tracking-tight">You Pay (for 1 Traveler)</p>
-               <p class="text-lg font-semibold tracking-tight">BDT {% if ticket.discount %}{{ticket.base_price|add:ticket.tax|get_pay_price:ticket.get_ticket_discount_price|intcomma}}{% else %}{{ticket.base_price|add:ticket.tax|intcomma}}{% endif %}</p>
+               <p class="text-lg font-semibold tracking-tight">You Pay (for {{total_traveler}} Traveler)</p>
+               <p class="text-lg font-semibold tracking-tight">BDT {{total_amount|sub:discount_amount}}</p>
             </div>
 
             {% if ticket.discount %}
             <div class="flex justify-between items-center text-green-500">
                <p class="text-md font-normal tracking-tight">You Save 😊</p>
-               <p class="text-md font-normal tracking-tight">BDT {{ticket.get_ticket_discount_price}}</p>
+               <p class="text-md font-normal tracking-tight">BDT {{discount_amount}}</p>
             </div>
             {% endif %}
          </div>
+         {% endwith %}
       </div>
    </div>
 </section>

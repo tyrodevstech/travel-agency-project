@@ -3,8 +3,10 @@ from app_flight.models import *
 
 # Register your models here.
 
-admin.site.register(AirportModel)
-admin.site.register(AirplaneModel)
-admin.site.register(DiscountModel)
-admin.site.register(AirPlaneTicketModel)
-admin.site.register(OrderFlightModel)
+admin.site.register(Airport)
+admin.site.register(Airplane)
+admin.site.register(Discount)
+admin.site.register(AirplaneTicket)
+admin.site.register(Order)
+admin.site.register(OrderFlight)
+admin.site.register(Payment)

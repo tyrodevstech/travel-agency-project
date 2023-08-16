@@ -1,0 +1,117 @@
+<div class="mt-4 mb-8 p-4 bg-white border border-gray-200 rounded-md drop-shadow-sm">
+    <div class="flex justify-between items-center">
+        <p class="text-lg text-center text-blue-900 font-bold tracking-tight">Passenger <span class="counter">1</span>
+            <span class="font-medium bg-blue-100 py-1 px-2 rounded">{{category|title}}</span>
+        </p>
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-pencil text-blue-900" width="24"
+            height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+            <path d="M4 20h4l10.5 -10.5a1.5 1.5 0 0 0 -4 -4l-10.5 10.5v4"></path>
+            <path d="M13.5 6.5l4 4"></path>
+        </svg>
+    </div>
+    <hr class="mt-4 border border-gray-400 border-t-0">
+
+    <div class="mt-4 flex items-center gap-1 text-gray-600">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-info-square-rounded w-5 h-5"
+            width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+            <path d="M12 9h.01"></path>
+            <path d="M11 12h1v4h1"></path>
+            <path d="M12 3c7.2 0 9 1.8 9 9s-1.8 9 -9 9s-9 -1.8 -9 -9s1.8 -9 9 -9z"></path>
+        </svg>
+        <p class="text-md font-normal tracking-tight">As mentioned on your passport or government approved IDs</p>
+    </div>
+
+    <div class="mt-6">
+        <div class="mt-4 grid gap-6 md:grid-cols-2">
+            <div>
+                <label for="{{ form.title.id_for_label }}"
+                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select
+                    Title</label>
+                {{form.title}}
+                {% if form.title.errors %}
+                <div class="error">{{ form.title.errors }}</div>
+                {% endif %}
+                <small class="form-text text-muted">{{ form.title.help_text }}</small>
+            </div>
+        </div>
+
+        <div class="mt-4 grid gap-6 md:grid-cols-2">
+            <div>
+                <label for="{{ form.first_name.id_for_label }}"
+                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">First
+                    name</label>
+                {{form.first_name}}
+                {% if form.first_name.errors %}
+                <div class="error">{{ form.first_name.errors }}</div>
+                {% endif %}
+                <small class="form-text text-muted">{{ form.first_name.help_text }}</small>
+            </div>
+            <div>
+                <label for="{{ form.last_name.id_for_label }}"
+                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Last
+                    name</label>
+                {{form.last_name}}
+                {% if form.last_name.errors %}
+                <div class="error">{{ form.last_name.errors }}</div>
+                {% endif %}
+                <small class="form-text text-muted">{{ form.last_name.help_text }}</small>
+            </div>
+
+            <div>
+                <label for="{{ form.nationality.id_for_label }}"
+                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nationality
+                </label>
+                {{form.nationality}}
+                {% if form.nationality.errors %}
+                <div class="error">{{ form.nationality.errors }}</div>
+                {% endif %}
+                <small class="form-text text-muted">{{ form.nationality.help_text }}</small>
+            </div>
+            <div>
+                <label for="{{ form.date_of_birth.id_for_label }}" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">DOB</label>
+                {{form.date_of_birth}}
+                {% if form.date_of_birth.errors %}
+                <div class="error">{{ form.date_of_birth.errors }}</div>
+                {% endif %}
+                <small class="form-text text-muted">{{ form.date_of_birth.help_text }}</small>
+            </div>
+        </div>
+        <hr class="mt-8">
+
+        <p class="mt-2 text-lg text-start text-blue-900 font-bold tracking-tight">Contact Details</p>
+        <div class="mt-1 flex items-center gap-1 text-gray-600">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-info-square-rounded w-5 h-5"
+                width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                <path d="M12 9h.01"></path>
+                <path d="M11 12h1v4h1"></path>
+                <path d="M12 3c7.2 0 9 1.8 9 9s-1.8 9 -9 9s-9 -1.8 -9 -9s1.8 -9 9 -9z"></path>
+            </svg>
+            <p class="text-md font-normal tracking-tight"> Receive booking confirmation & updates</p>
+        </div>
+
+        <div class="mt-6 grid gap-6 md:grid-cols-2">
+            <div>
+                <label for="{{ form.email.id_for_label }}" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
+                {{form.email}}
+                {% if form.email.errors %}
+                <div class="error">{{ form.email.errors }}</div>
+                {% endif %}
+                <small class="form-text text-muted">{{ form.email.help_text }}</small>
+            </div>
+            <div>
+                <label for="{{ form.phone.id_for_label }}" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Phone</label>
+                {{form.phone}}
+                {% if form.phone.errors %}
+                <div class="error">{{ form.phone.errors }}</div>
+                {% endif %}
+                <small class="form-text text-muted">{{ form.phone.help_text }}</small>
+            </div>
+        </div>
+    </div>
+</div>

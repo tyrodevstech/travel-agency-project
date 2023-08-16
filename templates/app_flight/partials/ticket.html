@@ -52,11 +52,11 @@
                     </path>
                 </svg>
                 <div class="text-sm flex flex-col">
-                    <p class="font-bold">{{ ticket.get_ticket_price }} ৳</p>
+                    <p class="font-bold">{{ ticket.get_ticket_price|floatformat:2 }} ৳</p>
                     <p class="text-xs text-gray-500">Price per adult</p>
                 </div>
             </div>
-            <a href="{% url 'app_flight:tickets_details' ticket.id %}"
+            <a href="{% url 'app_flight:tickets_details' ticket.id %}?traveler={{traveler}}"
                 class="w-full rounded px-5 py-1.5 text-white bg-green-800 text-center ">
                 <div class="">Book</div>
             </a>

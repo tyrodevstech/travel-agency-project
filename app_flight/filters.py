@@ -1,14 +1,18 @@
 import django_filters as filter
-from django_filters.widgets import RangeWidget
-from django_property_filter import PropertyRangeFilter,PropertyFilterSet
 from django import forms
+from django_filters.widgets import RangeWidget
+from django_property_filter import PropertyFilterSet, PropertyRangeFilter
 
-from app_flight.models import AirplaneModel, AirPlaneTicketModel, AirportModel
+from app_flight.models import Airplane, AirplaneTicket, Airport
+
+
 class CustomRangeWidget(RangeWidget):
-    template_name = 'app_flight/widgets/rangeinput.html'
+    template_name = "app_flight/widgets/rangeinput.html"
+
 
 class CustomCheckboxSelectMultiple(forms.CheckboxSelectMultiple):
-    template_name = 'app_flight/widgets/custom_checkbox.html'
+    template_name = "app_flight/widgets/custom_checkbox.html"
+
 
 class DayNightFilter(filter.MultipleChoiceFilter):
     def filter(self, qs, value):
@@ -20,36 +24,48 @@ class DayNightFilter(filter.MultipleChoiceFilter):
             return qs.exclude(depart_time__gte="06:00:00", depart_time__lt="18:00:00")
         return qs
 
+
 class AirPlaneTicketFilters(PropertyFilterSet):
     airplane = filter.ModelMultipleChoiceFilter(
-        queryset=AirplaneModel.objects.all(),
-        widget=CustomCheckboxSelectMultiple
+        queryset=Airplane.objects.all(), widget=CustomCheckboxSelectMultiple
     )
     schedule = DayNightFilter(
         field_name="depart_time",
         lookup_expr="exact",
-        choices=(('day', 'day'), ('night', 'night'))
+        choices=(("day", "day"), ("night", "night")),
     )
     ticket_price = PropertyRangeFilter(
-        field_name='get_ticket_price',
-        label="Price",
-        widget=CustomRangeWidget
+        field_name="get_ticket_price", label="Price", widget=CustomRangeWidget
     )
     flight_type = filter.MultipleChoiceFilter(
-        field_name='flight_type',
-        choices=AirPlaneTicketModel.FLGHT_TYPE_CHOICES,
-        widget=CustomCheckboxSelectMultiple
+        field_name="flight_type",
+        choices=AirplaneTicket.FLIGHT_TYPE_CHOICES,
+        widget=CustomCheckboxSelectMultiple,
     )
-    location_from = filter.ModelChoiceFilter(queryset=AirportModel.objects.all(), empty_label='Locaton From')
-    location_to = filter.ModelChoiceFilter(queryset=AirportModel.objects.all(), empty_label='Locaton To')
-    depart_date = filter.DateFilter(field_name='depart_date')
+    location_from = filter.ModelChoiceFilter(
+        queryset=Airport.objects.all(), empty_label="Locaton From"
+    )
+    location_to = filter.ModelChoiceFilter(
+        queryset=Airport.objects.all(), empty_label="Locaton To"
+    )
+    depart_date = filter.DateFilter(field_name="depart_date")
 
     class Meta:
-        model = AirPlaneTicketModel
+        model = AirplaneTicket
         fields = []
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.filters["airplane"].field.label_from_instance = lambda airplane: airplane.airplane_name
-        self.filters["location_from"].field.label_from_instance = lambda airport: f"{airport.airport}, {airport.city}, {airport.country.name}"
-        self.filters["location_to"].field.label_from_instance = lambda airport: f"{airport.airport}, {airport.city}, {airport.country.name}"
+        self.filters[
+            "airplane"
+        ].field.label_from_instance = lambda airplane: airplane.name
+        self.filters[
+            "location_from"
+        ].field.label_from_instance = (
+            lambda airport: f"{airport.name}, {airport.city}, {airport.country.name}"
+        )
+        self.filters[
+            "location_to"
+        ].field.label_from_instance = (
+            lambda airport: f"{airport.name}, {airport.city}, {airport.country.name}"
+        )
