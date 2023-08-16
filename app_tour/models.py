@@ -61,7 +61,7 @@ class TourPackageModel(models.Model):
     package_price = models.FloatField(null=True, blank=True)
     Children_package_price = models.FloatField(null=True, default= 50, help_text="Enter 50 percent children traveler")
     Infant_package_price = models.FloatField(null=True, default= 90, help_text="Enter 90 percent infant traveler")
-    discount = models.ForeignKey("app_flight.DiscountModel", on_delete=models.CASCADE, null=True, blank=True)
+    discount = models.ForeignKey("app_flight.Discount", on_delete=models.CASCADE, null=True, blank=True)
 
     hotel = models.ManyToManyField(HotelModel)
 
