@@ -52,24 +52,25 @@
 
                 <p class="mt-6 text-lg text-start text-blue-900 font-bold tracking-tight">Card Details</p>
                 <form class="mt-4" action="" method="POST">
+                  {% csrf_token %}
                     <div class="mt-4 grid gap-6 md:grid-cols-2">
                         <div>
                             <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">(Full name as displayed on card)*</label>
-                            <input type="text" id="name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Name" required>
+                            {{ form.user_card_name }}
                         </div>
                         <div>
                             <label for="card_number" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Card Number *</label>
-                            <input type="number" min="0" id="card_number" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="xxxx-xxxx-xxxx-xxxx" required>
+                            {{ form.user_card_number }}
                         </div>
       
                         <div>
                            <label for="cvc" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">CVC *
                            </label>
-                           <input type="number" min="0" id="cvc" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="***">
+                           {{ form.user_cvc_number }}
                         </div>  
                         <div>
                             <label for="code" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Postal / ZIP code (optional)</label>
-                            <input type="text" min="0" id="code" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="e.g. 12345">
+                            {{ form.user_postal_code }}
                         </div>
                      </div>
 

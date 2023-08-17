@@ -2,7 +2,7 @@
 {% load static %}
 {% load mathfilters %}
 
-<a href="{% url 'app_tour:tour_details' tour.id  %}" class="flex flex-1 flex-col shadow-sm bg-white border border-gray-200 rounded-lg md:flex-row hover:shadow-md transition-all dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
+<a href="{% url 'app_tour:tour_details' tour.id  %}" class="mb-4 flex flex-1 flex-col shadow-sm bg-white border border-gray-200 rounded-lg md:flex-row hover:shadow-md transition-all dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
 
     
     <img class="object-cover w-1/5 rounded-t-lg  md:rounded-none md:rounded-l-lg" src="{% if tour.package_cover_image %}{{ tour.package_cover_image.url }}{% else %}{% static 'images/theme.jpg' %}{% endif %}" alt="">

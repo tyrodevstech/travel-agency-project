@@ -69,8 +69,8 @@ class AirplaneTicket(models.Model):
 
     base_price = models.FloatField(null=True, blank=True)
 
-    child_discount = models.FloatField(null=True, blank=True)
-    infant_discount = models.FloatField(null=True, blank=True)
+    child_discount = models.FloatField(null=True, blank=True, default=50, help_text="Enter 50 percent children traveler")
+    infant_discount = models.FloatField(null=True, blank=True, default=90, help_text="Enter 90 percent infant traveler")
 
     tax = models.FloatField(null=True, blank=True)
 
@@ -158,21 +158,28 @@ class Order(models.Model):
 
 
 class Payment(models.Model):
-    STATUS_CHOICES = [
-        ("PENDING", "Pending"),
-        ("COMPLETED", "Completed"),
-        ("FAILED", "Failed"),
-    ]
-
     order = models.OneToOneField(Order, on_delete=models.CASCADE)
-    payment_status = models.CharField(
-        max_length=20, choices=STATUS_CHOICES, default="PENDING"
-    )
-    payment_amount = models.DecimalField(max_digits=10, decimal_places=2)
-    payment_date = models.DateTimeField(null=True, blank=True)
+
+    user_card_name = models.CharField(max_length=125, null=True)
+    user_card_number = models.CharField(max_length=125, null=True)
+    user_cvc_number = models.CharField(max_length=125, null=True)
+    user_postal_code = models.CharField(max_length=125, null=True)
+
+    adults_fare = models.FloatField(null=True)
+    childrens_fare = models.FloatField(null=True, blank=True)
+    infants_fare = models.FloatField(null=True, blank=True)
+
+    total_traveler = models.PositiveIntegerField(null=True, blank=True)
+
+    sub_total_fare = models.FloatField(null=True)
+    total_fare = models.FloatField(null=True)
+
+    is_paid = models.BooleanField(default=False, null=True)
+
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"Payment for Order {self.order.id} - {self.payment_status}"
+        return f"Payment for Order {self.order.id} - orderby: {self.order.user.name}"
 
 
 class OrderFlight(models.Model):

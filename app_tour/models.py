@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 from django.contrib.auth.models import User
 from django_countries.fields import CountryField
 from ckeditor_uploader.fields import RichTextUploadingField
@@ -56,7 +57,7 @@ class TourPackageModel(models.Model):
     options = RichTextUploadingField(null=True)
     policy = RichTextUploadingField(null=True)
 
-    journey_date = models.DateTimeField()
+    journey_date = models.DateField(default=timezone.now)
 
     package_price = models.FloatField(null=True, blank=True)
     Children_package_price = models.FloatField(null=True, default= 50, help_text="Enter 50 percent children traveler")
@@ -73,6 +74,12 @@ class TourPackageModel(models.Model):
     def get_discount_price(self):
         if self.discount:
             return (self.package_price / 100) * self.discount.amount
+        else:
+            return 0
+    
+    @property
+    def get_discount_total_price(self):
+        return self.package_price - self.get_discount_price()
             
 
     class Meta:

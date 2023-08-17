@@ -1,6 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
+from django.contrib import messages
 from django.utils.decorators import method_decorator
 from django.views.generic import FormView, TemplateView
 from django.views.generic.list import ListView
@@ -9,7 +10,7 @@ from app_flight.filters import AirPlaneTicketFilters
 from app_flight.models import AirplaneTicket, Order, OrderFlight
 from app_main.forms import UserFeedbackForm
 
-from .forms import OrderFlightForm
+from .forms import OrderFlightForm, FlightPaymentsForm
 
 # from django_filters.views import FilterView
 
@@ -128,12 +129,13 @@ class AirPlaneTicketsDetailsView(FormView):
             user=self.request.user.customuser,
             total_amount=self.get_context_data().get("total_amount"),
         )
+        self.oder_id = order_obj.id
         for formset in order_flight_forms:
                 for form in formset:
                     new_form = form.save(commit=False)
                     new_form.ticket = self.get_context_data().get("ticket")
                     new_form.order = order_obj
-                    # new_form.save()
+                    new_form.save()
         return super().form_valid(form)
 
     def form_invalid(self):
@@ -151,10 +153,23 @@ class AirPlaneTicketsDetailsView(FormView):
             return self.form_invalid()
 
     def get_success_url(self):
-        ticket_id=self.kwargs['pk']
-        return reverse_lazy('app_flight:tickets_details', kwargs={'pk': ticket_id})
+        return reverse_lazy('app_flight:tickets_payments', kwargs={'pk': self.oder_id})
 
 
 @method_decorator(signin_decorators, name="dispatch")
-class AirPlaneTicketsPaymentsView(TemplateView):
+class AirPlaneTicketsPaymentsView(FormView):
     template_name = "app_flight/payment.html"
+    form_class = FlightPaymentsForm
+    success_url = reverse_lazy("app_main:order-list")
+
+    def form_valid(self, form):
+        payment = form.save(commit=False)
+
+        # payment.save()
+        messages.success(self.request, 'Payment has been completed successfully !')
+        return super(AirPlaneTicketsPaymentsView, self).form_valid(form)
+
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context

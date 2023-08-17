@@ -9,8 +9,6 @@ from app_tour.models import TourLocationModel, TourPackageModel
 class CustomRangeWidget(RangeWidget):
     template_name = 'app_flight/widgets/rangeinput.html'
 
-class CustomCheckboxSelectMultiple(forms.CheckboxSelectMultiple):
-    template_name = 'app_flight/widgets/custom_checkbox.html'
 
 class DayNightFilter(filter.MultipleChoiceFilter):
     def filter(self, qs, value):
@@ -24,13 +22,13 @@ class DayNightFilter(filter.MultipleChoiceFilter):
 
 class TourPackageFilters(PropertyFilterSet):
     price = PropertyRangeFilter(
-        field_name='get_discount_price',
+        field_name='get_discount_total_price',
         label="Price",
         widget=CustomRangeWidget
     )
     tour_location = filter.ModelChoiceFilter(queryset=TourLocationModel.objects.all(), empty_label='Select Location / Tour')
-    package_title = filter.CharFilter(widget=forms.TextInput(attrs={'placeholder':'Search by title...'}))
-    journey_date = filter.DateFilter(field_name='journey_date',widget=forms.DateInput(attrs={'type':'date'}))
+    package_title = filter.CharFilter(widget=forms.TextInput(attrs={'placeholder':'Search by title...'}), lookup_expr='icontains')
+    journey_date = filter.DateFilter(field_name='journey_date', widget=forms.DateInput(attrs={'type':'date'}))
 
     class Meta:
         model = TourPackageModel
