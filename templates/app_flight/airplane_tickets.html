@@ -45,7 +45,7 @@
             <div class="mt-4 flex justify-between items-center">
                <div class="flex items-center gap-2">
                   <img src="{% if ticket.airplane.airplane_logo %}{{ ticket.airplane.airplane_logo.url }}{% else %}https://storage.googleapis.com/gz-flight-prod-booking-data/carrier/logo/d31c6c3d-505d-4675-9b02-ecd9c2301115.png{% endif %}" class="w-16 aspect-auto" alt="">
-                  <p class="text-md text-start font-normal tracking-tight">{{ ticket.airplane.airplane_name }}<br>{{ ticket.airplane.airplane_model }} | BD71</p>
+                  <p class="text-md text-start font-normal tracking-tight">{{ ticket.airplane.name }}<br>{{ ticket.airplane.model }} | BD71</p>
                </div>
                <p class="text-md text-start font-medium tracking-tight">({{ ticket.flight_type }})</p>
             </div> <hr class="mt-4">
@@ -138,7 +138,7 @@
 
          <p class="mt-4 text-lg text-start text-blue-900 font-semibold tracking-tight mb-3">Fare Summary</p>
 
-         {% for item in amount_infos %}
+         {% for item in checkout_infos.amount_infos %}
          <div class="flex justify-between items-center mb-1">
             <p class="text-sm font-normal tracking-tight">{{item.type|capfirst}} ({{item.count}} traveler)</p>
             <p class="text-sm font-normal tracking-tight">BDT <span class="text-base font-semibold">{{item.amount|intcomma}}</span></p>
@@ -148,9 +148,8 @@
 
          <div class="flex justify-between items-center mt-2">
             <p class="text-md font-normal tracking-tight">Sub-Total</p>
-            <p class="text-md font-normal tracking-tight">BDT {{total_amount|intcomma}}</p>
+            <p class="text-md font-normal tracking-tight">BDT {{checkout_infos.total_amount|intcomma}}</p>
          </div>
-         {% with ticket|apply_discount:total_amount as discount_amount %}
          {% if ticket.discount %}
          <div class="flex justify-between items-center">
             <div class="flex items-center gap-2">
@@ -164,25 +163,24 @@
                   <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"></path>
                   <path d="M9 12l6 0"></path>
                </svg>
-               <p class="text-md text-green-500 font-normal tracking-tight">BDT {{discount_amount}}</p>
+               <p class="text-md text-green-500 font-normal tracking-tight">BDT {{checkout_infos.discount_amount}}</p>
             </div>
          </div>
          {% endif %}
 
          <div class="mt-6 p-4 text-blue-900 bg-green-100 rounded">
             <div class="flex justify-between items-center">
-               <p class="text-lg font-semibold tracking-tight">You Pay (for {{total_traveler}} Traveler)</p>
-               <p class="text-lg font-semibold tracking-tight">BDT {{total_amount|sub:discount_amount}}</p>
+               <p class="text-lg font-semibold tracking-tight">You Pay (for {{checkout_infos.total_traveler}} Traveler)</p>
+               <p class="text-lg font-semibold tracking-tight">BDT {{checkout_infos.total_amount|sub:checkout_infos.discount_amount}}</p>
             </div>
 
             {% if ticket.discount %}
             <div class="flex justify-between items-center text-green-500">
                <p class="text-md font-normal tracking-tight">You Save 😊</p>
-               <p class="text-md font-normal tracking-tight">BDT {{discount_amount}}</p>
+               <p class="text-md font-normal tracking-tight">BDT {{checkout_infos.discount_amount}}</p>
             </div>
             {% endif %}
          </div>
-         {% endwith %}
       </div>
    </div>
 </section>

@@ -27,6 +27,7 @@ def get_pay_price(subtotal, discount_price):
 def get_tour_discount_price(subtotal, discount_price):
     return float(subtotal) - float(discount_price)
 
-@register.filter
-def apply_discount(ticket,total_amount):
-    return round(ticket.get_ticket_discount_price(total_amount),2)
+@register.filter(takes_context=True)
+def get_ticket_total_amount(context, ticket):
+    print(context)
+    return ticket

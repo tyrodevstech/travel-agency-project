@@ -114,7 +114,43 @@
             ]
         });
     </script>
+    <script>
+        $(document).ready(function () {
+            // Increment and Decrement buttons
+            $(".increment").click(function () {
+                var inputField = $(this).siblings("input");
+                var currentValue = parseInt(inputField.val());
+                inputField.val(currentValue + 1);
+                updateTotalTravelers();
+            });
 
+            $(".decrement").click(function () {
+                var inputField = $(this).siblings("input");
+                var currentValue = parseInt(inputField.val());
+
+                if ($(inputField).attr("id") === "id_traveler_adult") {
+                    if (currentValue > 1) {
+                        inputField.val(currentValue - 1);
+                        updateTotalTravelers();
+                    }
+                } else {
+                    if (currentValue > 0) {
+                        inputField.val(currentValue - 1);
+                        updateTotalTravelers();
+                    }
+                }
+            });
+
+            function updateTotalTravelers() {
+                var totalAdults = parseInt($("#id_traveler_adult").val());
+                var totalChildren = parseInt($("#id_traveler_child").val());
+                var totalInfants = parseInt($("#id_traveler_infant").val());
+
+                var totalTravelers = totalAdults + totalChildren + totalInfants;
+                $("#total-traveler").text(totalTravelers); // Update the total traveler count in the span
+            }
+        });
+    </script>
     {% block script %}
     {% endblock script %}
     

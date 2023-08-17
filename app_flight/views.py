@@ -85,20 +85,38 @@ class AirPlaneTicketsDetailsView(FormView):
         )
 
         total_amount = total_adult_amount + total_child_amount + total_infant_amount
+        total_traveler = traveler_adult + traveler_child + traveler_infant
 
         order_flight_forms = self._get_order_flight_forms(
             categories=["adult", "child", "infant"],
             extras=[traveler_adult, traveler_child, traveler_infant],
         )
-        amount_infos = [
-            {'type' : 'adult', 'count': traveler_adult,'amount':total_adult_amount},
-            {'type' : 'child', 'count': traveler_child,'amount':total_child_amount},
-            {'type' : 'infant', 'count': traveler_infant,'amount':total_infant_amount},
-        ]
+        checkout_infos = {
+            "amount_infos": [
+                {
+                    "type": "adult",
+                    "count": traveler_adult,
+                    "amount": total_adult_amount,
+                },
+                {
+                    "type": "child",
+                    "count": traveler_child,
+                    "amount": total_child_amount,
+                },
+                {
+                    "type": "infant",
+                    "count": traveler_infant,
+                    "amount": total_infant_amount,
+                },
+            ],
+            "total_amount": total_amount,
+            "total_traveler": total_traveler,
+            "discount_amount": round(ticket_obj.get_ticket_discount_price(total_amount),2),
+        }
+
         context["order_flight_forms"] = order_flight_forms
-        context["total_amount"] = total_amount
-        context["amount_infos"] = amount_infos
-        context["total_traveler"] = traveler_adult+traveler_child+traveler_infant
+        context["checkout_infos"] = checkout_infos
+        self.request.session["checkout_infos"] = checkout_infos
 
         return context
 
@@ -129,11 +147,11 @@ class AirPlaneTicketsDetailsView(FormView):
             total_amount=self.get_context_data().get("total_amount"),
         )
         for formset in order_flight_forms:
-                for form in formset:
-                    new_form = form.save(commit=False)
-                    new_form.ticket = self.get_context_data().get("ticket")
-                    new_form.order = order_obj
-                    # new_form.save()
+            for form in formset:
+                new_form = form.save(commit=False)
+                new_form.ticket = self.get_context_data().get("ticket")
+                new_form.order = order_obj
+                # new_form.save()
         return super().form_valid(form)
 
     def form_invalid(self):
@@ -151,8 +169,8 @@ class AirPlaneTicketsDetailsView(FormView):
             return self.form_invalid()
 
     def get_success_url(self):
-        ticket_id=self.kwargs['pk']
-        return reverse_lazy('app_flight:tickets_details', kwargs={'pk': ticket_id})
+        ticket_id = self.kwargs["pk"]
+        return reverse_lazy("app_flight:tickets_details", kwargs={"pk": ticket_id})
 
 
 @method_decorator(signin_decorators, name="dispatch")

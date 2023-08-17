@@ -22,6 +22,13 @@ def index_view(request):
             request.GET, queryset=AirplaneTicket.objects.all()
         )
     }
+    traveler_adult = int(request.GET.get("traveler_adult", 1))
+    traveler_child = int(request.GET.get("traveler_child", 0))
+    traveler_infant = int(request.GET.get("traveler_infant", 0))
+    context["traveler_adult"] = traveler_adult
+    context["traveler_child"] = traveler_child
+    context["traveler_infant"] = traveler_infant
+    context["total_traveler"] = traveler_adult + traveler_child + traveler_infant
     return render(request, "app_main/index.html", context)
 
 
