@@ -14,12 +14,12 @@
     </div>
     <div class="mt-2 flex sm:flex-row sm:justify-between items-center flex-wrap ">
         <div class="flex flex-row place-items-center w-full max-w-[14rem]">
-            <img alt="Qatar Airways" class="w-10 h-10 mr-2"
-                src="{% if ticket.airplane.airplane_logo %}{{ ticket.airplane.airplane_logo.url }}{% else %}https://storage.googleapis.com/gz-flight-prod-booking-data/carrier/logo/d31c6c3d-505d-4675-9b02-ecd9c2301115.png{% endif %}"
+            <img alt="Qatar Airways" class="w-20 h-10 mr-2"
+                src="{% if ticket.airplane.logo %}{{ ticket.airplane.logo.url }}{% else %}https://storage.googleapis.com/gz-flight-prod-booking-data/carrier/logo/d31c6c3d-505d-4675-9b02-ecd9c2301115.png{% endif %}"
                 style="opacity: 1; transform-origin: 0% 50% 0px; transform: none;" />
             <div class="flex flex-col ml-2 text-xs text-gray-500">
-                <p class=" font-bold line-clamp-1">{{ ticket.airplane.airplane_name }}</p>
-                <p class="">{{ ticket.airplane.airplane_model }}</p>
+                <p class="font-bold line-clamp-1">{{ ticket.airplane.name }}</p>
+                <p class="">{{ ticket.airplane.model }}</p>
                 <div class="mt-2">1*{{ ticket.get_total_baggage }} KG</div>
             </div>
         </div>
