@@ -1,4 +1,5 @@
 {% extends 'app_main/dashboard/base.html' %}
+{% load humanize %}
 {% load static %}
 {% block title %}Order List | {% endblock title %}
 
@@ -8,44 +9,156 @@
 
 <section class="relative overflow-y-auto p-4 md:p-6 min-h-full mb-4">
     {% include 'app_main/partials/section_nav.html' %}
-        <h2 class="text-xl font-bold text-gray-900 dark:text-white">Document of Order List</h2> <hr class="my-4">
+        <h2 class="text-xl font-bold text-gray-900 dark:text-white">Document of Flight Order List</h2> <hr class="my-4">
         
-        <div class="relative overflow-x-auto">
-            <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+        <div class="relative overflow-x-auto rounded-md border border-green-500 p-4">
+            <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400" id="flightTable">
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
                         <th scope="col" class="px-6 py-3">
-                            Product name
+                            Order Name
                         </th>
                         <th scope="col" class="px-6 py-3">
-                            Color
+                            Order ID
                         </th>
                         <th scope="col" class="px-6 py-3">
-                            Category
+                            User
                         </th>
                         <th scope="col" class="px-6 py-3">
-                            Price
+                            Total Traveler
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Total Fare
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Card Number
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Status
                         </th>
                     </tr>
                 </thead>
                 <tbody>
+                    {% if flight_orders %}
+                    {% for order in flight_orders %}
                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            Apple MacBook Pro 17"
+                            {{ order.order.ticket.airplane.name }} ({{ order.order.ticket.location_from.code }} - {{ order.order.ticket.location_to.code }})
                         </th>
                         <td class="px-6 py-4">
-                            Silver
+                            {{ order.order.id }}
                         </td>
                         <td class="px-6 py-4">
-                            Laptop
+                            {{ order.order.user.name }}
                         </td>
                         <td class="px-6 py-4">
-                            $2999
+                            {{ order.total_traveler }}
                         </td>
+                        <td class="px-6 py-4">
+                            {{ order.total_fare|intcomma }} ৳
+                        </td>
+                        <td class="px-6 py-4">
+                            {{ order.user_card_number }}
+                        </td>
+                        {% if order.is_paid %}
+                            <td class="px-6 py-4">
+                                <button type="button" class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-1.5 mr-2 mb-2">Paid</button>
+                            </td>
+                        {% else %}
+                            <td class="px-6 py-4">
+                                <button type="button" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-1.5 mr-2 mb-2">Unpaid</button>
+                            </td>
+                        {% endif %}
                     </tr>
+                    {% endfor %}
+                    {% else %}
+                    <p class="text-sm text-gray-900 " role="none">No data available!</p>
+                    {% endif %}
                 </tbody>
             </table>
         </div>
 
+
+        <h2 class="mt-10 text-xl font-bold text-gray-900 dark:text-white">Document of Tour Order List</h2> <hr class="my-4">
+        
+        <div class="relative overflow-x-auto rounded-md border border-green-500 p-4">
+            <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400" id="tourTable">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <tr>
+                        <th scope="col" class="px-6 py-3">
+                            Order Name
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Order ID
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            User
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Total Traveler
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Total Fare
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Card Number
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Status
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if tour_orders %}
+                    {% for order in tour_orders %}
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            {{ order.order.package.package_title }}
+                        </th>
+                        <td class="px-6 py-4">
+                            {{ order.order.id }}
+                        </td>
+                        <td class="px-6 py-4">
+                            {{ order.order.user.username }}
+                        </td>
+                        <td class="px-6 py-4">
+                            {{ order.total_traveler }}
+                        </td>
+                        <td class="px-6 py-4">
+                            {{ order.total_fare|intcomma }} ৳
+                        </td>
+                        <td class="px-6 py-4">
+                            {{ order.user_card_number }}
+                        </td>
+                        {% if order.is_paid %}
+                            <td class="px-6 py-4">
+                                <button type="button" class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-1.5 mr-2 mb-2">Paid</button>
+                            </td>
+                        {% else %}
+                            <td class="px-6 py-4">
+                                <button type="button" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-1.5 mr-2 mb-2">Unpaid</button>
+                            </td>
+                        {% endif %}
+                    </tr>
+                    {% endfor %}
+                    {% else %}
+                    <p class="text-sm text-gray-900 " role="none">No data available!</p>
+                    {% endif %}
+                </tbody>
+                </tbody>
+            </table>
+        </div>
+
+
 </section>
 {% endblock main_content %}
+
+
+{% block script %}
+
+<script>	
+    let table_1 = new DataTable('#flightTable');
+    let table_2 = new DataTable('#tourTable');
+</script>
+
+{% endblock script %}

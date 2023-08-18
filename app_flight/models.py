@@ -38,6 +38,7 @@ class Airplane(models.Model):
 class Discount(models.Model):
     name = models.CharField(max_length=122, null=True)
     code = models.CharField(max_length=122, null=True)
+    details = models.CharField(max_length=999, null=True, blank=True)
     amount = models.FloatField(null=True)
     start_date = models.DateTimeField(default=timezone.now)
     end_date = models.DateTimeField(default=timezone.now)
@@ -149,6 +150,7 @@ class Order(models.Model):
     ]
 
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    ticket = models.ForeignKey(AirplaneTicket, on_delete=models.CASCADE, null=True)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default="PENDING")
     total_amount = models.DecimalField(max_digits=10, decimal_places=2)
     created_at = models.DateTimeField(default=timezone.now)
@@ -157,29 +159,6 @@ class Order(models.Model):
         return f"Order {self.id} - {self.user} - {self.status}"
 
 
-class Payment(models.Model):
-    order = models.OneToOneField(Order, on_delete=models.CASCADE)
-
-    user_card_name = models.CharField(max_length=125, null=True)
-    user_card_number = models.CharField(max_length=125, null=True)
-    user_cvc_number = models.CharField(max_length=125, null=True)
-    user_postal_code = models.CharField(max_length=125, null=True)
-
-    adults_fare = models.FloatField(null=True)
-    childrens_fare = models.FloatField(null=True, blank=True)
-    infants_fare = models.FloatField(null=True, blank=True)
-
-    total_traveler = models.PositiveIntegerField(null=True, blank=True)
-
-    sub_total_fare = models.FloatField(null=True)
-    total_fare = models.FloatField(null=True)
-
-    is_paid = models.BooleanField(default=False, null=True)
-
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return f"Payment for Order {self.order.id} - orderby: {self.order.user.name}"
 
 
 class OrderFlight(models.Model):
@@ -209,3 +188,29 @@ class OrderFlight(models.Model):
         verbose_name = "Order Flight"
         verbose_name_plural = "Order Flights"
         ordering = ["-id"]
+
+
+
+class Payment(models.Model):
+    order = models.OneToOneField(Order, on_delete=models.CASCADE)
+
+    user_card_name = models.CharField(max_length=125, null=True)
+    user_card_number = models.CharField(max_length=125, null=True)
+    user_cvc_number = models.CharField(max_length=125, null=True)
+    user_postal_code = models.CharField(max_length=125, null=True)
+
+    adults_fare = models.FloatField(null=True)
+    childrens_fare = models.FloatField(null=True, blank=True)
+    infants_fare = models.FloatField(null=True, blank=True)
+
+    total_traveler = models.PositiveIntegerField(null=True, blank=True)
+
+    sub_total_fare = models.FloatField(null=True)
+    total_fare = models.FloatField(null=True)
+
+    is_paid = models.BooleanField(default=False, null=True)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Payment for Order {self.order.id} - orderby: {self.order.user.name}"

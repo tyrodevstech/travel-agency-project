@@ -9,7 +9,10 @@ from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.models import User
 from django.contrib import messages
+
 from app_flight.filters import AirPlaneTicketFilters
+from app_flight.models import Discount, Payment
+from app_tour.models import TourPackageModel, TourPaymentsModel
 from app_main.forms import CustomUserForm, UserFeedbackForm
 from app_main.models import CustomUser
 
@@ -20,8 +23,12 @@ def index_view(request):
     context = {
         "filter": AirPlaneTicketFilters(
             request.GET, queryset=AirplaneTicket.objects.all()
-        )
+        ),
+        "discounts": Discount.objects.all()[:3],
+        "tours": TourPackageModel.objects.all()[:3]
     }
+
+
     traveler_adult = int(request.GET.get("traveler_adult", 1))
     traveler_child = int(request.GET.get("traveler_child", 0))
     traveler_infant = int(request.GET.get("traveler_infant", 0))
@@ -100,7 +107,11 @@ def signout_view(request):
 @login_required(login_url="app_main:signin")
 def dashboard_view(request):
     messages.info(request, "Welcome to your dashboard!")
-    return render(request, "app_main/dashboard/order.html")
+    context = {
+        'flight_orders': Payment.objects.all(),
+        'tour_orders': TourPaymentsModel.objects.all()
+    }
+    return render(request, "app_main/dashboard/order.html", context)
 
 
 @login_required(login_url="app_main:signin")

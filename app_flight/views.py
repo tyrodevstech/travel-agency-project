@@ -143,15 +143,17 @@ class AirPlaneTicketsDetailsView(FormView):
 
     def form_valid(self, order_flight_forms):
         form = self.get_form()
+        ticket = self.get_context_data().get("ticket")
         order_obj = Order.objects.create(
             user=self.request.user.customuser,
-            total_amount=self.get_context_data().get("total_amount"),
+            total_amount=self.get_context_data().get('checkout_infos').get("total_amount"),
+            ticket = ticket
         )
         self.oder_id = order_obj.id
         for formset in order_flight_forms:
             for form in formset:
                 new_form = form.save(commit=False)
-                new_form.ticket = self.get_context_data().get("ticket")
+                new_form.ticket = ticket
                 new_form.order = order_obj
                 # new_form.save()
         return super().form_valid(form)
@@ -182,12 +184,35 @@ class AirPlaneTicketsPaymentsView(FormView):
 
     def form_valid(self, form):
         payment = form.save(commit=False)
+        checkout_infos = self.get_context_data().get('checkout_infos')
 
-        # payment.save()
+        payment.order = self.get_context_data().get('order_obj')
+        payment.adults_fare = checkout_infos['amount_infos'][0]['amount']
+        payment.childrens_fare = checkout_infos['amount_infos'][1]['amount']
+        payment.infants_fare = checkout_infos['amount_infos'][2]['amount']
+
+        payment.total_traveler = checkout_infos['total_traveler']
+        payment.sub_total_fare = checkout_infos['total_amount'] + checkout_infos['discount_amount']
+        payment.total_fare = checkout_infos['total_amount']
+        payment.is_paid = True
+
+        payment.save()
+
+        if 'checkout_infos' in self.request.session:
+            del self.request.session['checkout_infos']
+
+        if 'ticket_query_params' in self.request.session:
+            del self.request.session['ticket_query_params']
+
         messages.success(self.request, 'Payment has been completed successfully !')
         return super(AirPlaneTicketsPaymentsView, self).form_valid(form)
 
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        order_id = self.kwargs.get('pk')
+
+        context['checkout_infos'] = self.request.session.get('checkout_infos', None)
+        context['order_obj'] = get_object_or_404(Order, id=order_id)
+
         return context
