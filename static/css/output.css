@@ -1208,6 +1208,13 @@ input:checked + .toggle-bg {
   margin-bottom: 1.5rem;
 }
 
+<<<<<<< HEAD
+=======
+.\!mb-8 {
+  margin-bottom: 2rem !important;
+}
+
+>>>>>>> devs
 .\!mt-8 {
   margin-top: 2rem !important;
 }
@@ -1383,6 +1390,10 @@ input:checked + .toggle-bg {
   height: 0.875rem;
 }
 
+.h-36 {
+  height: 9rem;
+}
+
 .h-4 {
   height: 1rem;
 }
@@ -1449,6 +1460,10 @@ input:checked + .toggle-bg {
 
 .w-3\.5 {
   width: 0.875rem;
+}
+
+.w-36 {
+  width: 9rem;
 }
 
 .w-4 {
@@ -1713,6 +1728,12 @@ input:checked + .toggle-bg {
   --tw-space-x-reverse: 0;
   margin-right: calc(0.5rem * var(--tw-space-x-reverse));
   margin-left: calc(0.5rem * calc(1 - var(--tw-space-x-reverse)));
+}
+
+.space-x-4 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-x-reverse: 0;
+  margin-right: calc(1rem * var(--tw-space-x-reverse));
+  margin-left: calc(1rem * calc(1 - var(--tw-space-x-reverse)));
 }
 
 .space-y-2 > :not([hidden]) ~ :not([hidden]) {
@@ -2335,6 +2356,11 @@ input:checked + .toggle-bg {
   letter-spacing: -0.05em;
 }
 
+.text-\[\#00acee\] {
+  --tw-text-opacity: 1;
+  color: rgb(0 172 238 / var(--tw-text-opacity));
+}
+
 .text-\[\#1c3c6b\] {
   --tw-text-opacity: 1;
   color: rgb(28 60 107 / var(--tw-text-opacity));
@@ -2343,6 +2369,16 @@ input:checked + .toggle-bg {
 .text-\[\#20743c\] {
   --tw-text-opacity: 1;
   color: rgb(32 116 60 / var(--tw-text-opacity));
+}
+
+.text-\[\#39569c\] {
+  --tw-text-opacity: 1;
+  color: rgb(57 86 156 / var(--tw-text-opacity));
+}
+
+.text-\[\#ea4c89\] {
+  --tw-text-opacity: 1;
+  color: rgb(234 76 137 / var(--tw-text-opacity));
 }
 
 .text-blue-600 {
@@ -3370,6 +3406,10 @@ select:focus {
     margin-bottom: 2rem;
   }
 
+  .md\:mb-0 {
+    margin-bottom: 0px;
+  }
+
   .md\:ml-0 {
     margin-left: 0px;
   }
@@ -3465,6 +3505,10 @@ select:focus {
 
   .md\:flex-row {
     flex-direction: row;
+  }
+
+  .md\:flex-wrap {
+    flex-wrap: wrap;
   }
 
   .md\:space-x-8 > :not([hidden]) ~ :not([hidden]) {
@@ -3579,6 +3623,14 @@ select:focus {
 
   .lg\:mb-0 {
     margin-bottom: 0px;
+  }
+
+  .lg\:mb-16 {
+    margin-bottom: 4rem;
+  }
+
+  .lg\:mt-16 {
+    margin-top: 4rem;
   }
 
   .lg\:w-1\/2 {

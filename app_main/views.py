@@ -43,6 +43,10 @@ def search_view(request):
     return render(request, "app_main/search.html")
 
 
+def team_view(request):
+    return render(request, "app_main/team_view.html")
+
+
 def signin_view(request):
     if request.user.is_authenticated:
         return redirect("app_main:home")

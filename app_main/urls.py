@@ -7,6 +7,7 @@ app_name = "app_main"
 urlpatterns = [
     path("", index_view, name="home"),
     path("search/", search_view, name="search"),
+    path("team/", team_view, name="team"),
     path("order-list/", dashboard_view, name="order-list"),
     path("update-profile/", update_profile_view, name="update-profile"),
     path("change-password/", change_password_view, name="change-password"),

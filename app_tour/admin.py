@@ -3,10 +3,53 @@ from app_tour.models import *
 
 # Register your models here.
 
-admin.site.register(TourLocationModel)
-admin.site.register(TourPackageModel)
-admin.site.register(TourPackageImages)
-admin.site.register(TourOrderModel)
+class TourLocationModelAdmin(admin.ModelAdmin):
+    list_display = ('location_name', 'code', 'district', 'country',)
+    search_fields = ['location_name', 'code',]
+
+admin.site.register(TourLocationModel, TourLocationModelAdmin)
+
+class TourLocationModelAdmin(admin.ModelAdmin):
+    list_display = ('package_title', 'package_price', 'get_tour_location', 'get_discount',)
+    search_fields = ['package_title', 'package_price',]
+
+    @admin.display(ordering='location_name__id', description='Location')
+    def get_tour_location(self, obj):
+        return obj.tour_location.location_name
+
+    def get_discount(self, obj):
+        if obj.discount:
+            return f"{obj.discount.amount}%"
+        else:
+            return "N/A"
+        
+
+admin.site.register(TourPackageModel, TourLocationModelAdmin)
+
+
+class TourPackageImagesAdmin(admin.ModelAdmin):
+    list_display = ('get_package', 'image_title',)
+    search_fields = ['image_title',]
+
+    @admin.display(ordering='package__id', description='Package Name')
+    def get_package(self, obj):
+        return obj.package.package_title
+
+admin.site.register(TourPackageImages, TourPackageImagesAdmin)
+
+
+class TourOrderModelAdmin(admin.ModelAdmin):
+    list_display = ('get_username', 'get_package', 'id', 'created_at')
+
+    @admin.display(ordering='user__id', description='Username')
+    def get_username(self, obj):
+        return obj.user.username
+
+    @admin.display(ordering='package__id', description='Package Name')
+    def get_package(self, obj):
+        return obj.package.package_title
+
+admin.site.register(TourOrderModel, TourOrderModelAdmin)
 
 
 class TourPaymentsModelAdmin(admin.ModelAdmin):
@@ -26,6 +69,11 @@ class TourPaymentsModelAdmin(admin.ModelAdmin):
     def get_username(self, obj):
         return obj.order.user.username
 
-
 admin.site.register(TourPaymentsModel, TourPaymentsModelAdmin)
-admin.site.register(HotelModel)
+
+
+class HotelModelAdmin(admin.ModelAdmin):
+    list_display = ('hotel_name', 'link',)
+    search_fields = ['hotel_name',]
+
+admin.site.register(HotelModel, HotelModelAdmin)
