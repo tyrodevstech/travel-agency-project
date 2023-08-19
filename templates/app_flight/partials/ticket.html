@@ -1,5 +1,5 @@
 {% load mathfilters %}
-
+{% load humanize %}
 <div class="bg-white flex flex-col rounded overflow-hidden shadow border p-4 mb-4 last:mb-0">
     <div class="flex justify-start">
         <div class="flex flex-row flex-none items-baseline rounded-full bg-gray-100 py-1 px-2">
@@ -18,7 +18,7 @@
                 src="{% if ticket.airplane.logo %}{{ ticket.airplane.logo.url }}{% else %}https://storage.googleapis.com/gz-flight-prod-booking-data/carrier/logo/d31c6c3d-505d-4675-9b02-ecd9c2301115.png{% endif %}"
                 style="opacity: 1; transform-origin: 0% 50% 0px; transform: none;" />
             <div class="flex flex-col ml-2 text-xs text-gray-500">
-                <p class="font-bold line-clamp-1">{{ ticket.airplane.name }}</p>
+                <p class="font-bold line-clamp-1 text-sm">{{ ticket.airplane.name }}</p>
                 <p class="">{{ ticket.airplane.model }}</p>
                 <div class="mt-2">1*{{ ticket.get_total_baggage }} KG</div>
             </div>
@@ -29,7 +29,6 @@
                 <p class="font-medium">{{ ticket.depart_time }}</p>
                 <p class="font-semibold text-gray-400 text-xs mb-2">{{ ticket.depart_date }}</p>
                 <p class="text-gray-500"><span class="font-bold">{{ ticket.location_from.code }}</span></p>
-                <!-- <p class="text-gray-500">{{ ticket.location_from.country.name }}</p> -->
             </div>
             <div class="flex justify-center flex-col items-center">
                 <span>{{ ticket.duration }}</span>
@@ -39,11 +38,10 @@
                 <p class="font-medium">{{ ticket.arrive_time }}</p>
                 <p class="font-medium text-gray-400 text-xs mb-2">{{ ticket.arrive_date }}</p>
                 <p class="text-gray-500"><span class="font-bold">{{ ticket.location_to.code }}</span></p>
-                <!-- <p class="text-gray-500">{{ ticket.location_to.country.name }}</p> -->
             </div>
         </div>
         <div class="md:border-l-2 px-4 md:border-dotted flex flex-col justify-between gap-4 items-center flex-wrap">
-            <div class="flex gap-2">
+            <div class="flex gap-2 justify-center items-center">
                 <svg class="w-9 p-2 self-center bg-green-800 rounded-full fill-current text-white"
                     viewBox="0 0 64 64" pointer-events="all" aria-hidden="true" class="etiIcon css-ecvhkc"
                     role="presentation" style="fill: rgb(255, 255, 255);">
@@ -52,11 +50,12 @@
                     </path>
                 </svg>
                 <div class="text-sm flex flex-col">
-                    <p class="font-bold">{{ ticket.get_ticket_price|floatformat:2 }} ৳</p>
-                    <p class="text-xs text-gray-500">Price per adult</p>
+                    <p class="text-xs text-gray-500">Total Price</p>
+                    {% ticket_total_amount ticket as ticket_amount %}
+                    <p class="font-bold text-base"><del class="font-medium text-sm">{{ ticket_amount.0|intcomma }}</del> {{ticket_amount.1|intcomma }} ৳</p>
                 </div>
             </div>
-            <a href="{% url 'app_flight:tickets_details' ticket.id %}?traveler={{traveler}}"
+            <a href="{% url 'app_flight:tickets_details' ticket.id %}"
                 class="w-full rounded px-5 py-1.5 text-white bg-green-800 text-center ">
                 <div class="">Book</div>
             </a>
