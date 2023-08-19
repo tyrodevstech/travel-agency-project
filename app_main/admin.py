@@ -8,8 +8,16 @@ class UserFeedbackModelAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'phone',)
     search_fields = ['name', 'phone']
 
-
 admin.site.register(UserFeedback, UserFeedbackModelAdmin)
-admin.site.register(CustomUser)
+
+class CustomUserAdmin(admin.ModelAdmin):
+    list_display = ('name', 'get_username', 'email', 'phone')
+    search_fields = ['name', 'phone', 'email',]
+
+    @admin.display(ordering='user__id', description='username')
+    def get_username(self, obj):
+        return obj.user.username
+
+admin.site.register(CustomUser, CustomUserAdmin)
 
 
