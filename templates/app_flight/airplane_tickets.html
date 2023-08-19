@@ -110,7 +110,7 @@
          </div>
 
          <!-- flight traveler details -->
-         <form method="post">
+         <form method="post" id="traveler_infos">
             {% csrf_token %}
             {% for formset in order_flight_forms %}
                {{formset.management_form}}
@@ -184,5 +184,15 @@
       </div>
    </div>
 </section>
-
+<style>
+   #traveler_infos{
+      counter-reset: form_counter;
+   }
+   #traveler_infos .counter{
+      counter-increment: form_counter;
+   }
+   #traveler_infos .counter:before {
+      content: counter(form_counter);
+   }
+</style>
 {% endblock main %}
