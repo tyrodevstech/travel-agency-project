@@ -155,7 +155,7 @@ class AirPlaneTicketsDetailsView(FormView):
                 new_form = form.save(commit=False)
                 new_form.ticket = ticket
                 new_form.order = order_obj
-                # new_form.save()
+                new_form.save()
         return super().form_valid(form)
 
     def form_invalid(self):

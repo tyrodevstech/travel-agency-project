@@ -1208,13 +1208,10 @@ input:checked + .toggle-bg {
   margin-bottom: 1.5rem;
 }
 
-<<<<<<< HEAD
-=======
 .\!mb-8 {
   margin-bottom: 2rem !important;
 }
 
->>>>>>> devs
 .\!mt-8 {
   margin-top: 2rem !important;
 }
