@@ -112,8 +112,8 @@ def signout_view(request):
 def dashboard_view(request):
     messages.info(request, "Welcome to your dashboard!")
     context = {
-        'flight_orders': Payment.objects.all(),
-        'tour_orders': TourPaymentsModel.objects.all()
+        'flight_orders': Payment.objects.filter(order__user__user = request.user),
+        'tour_orders': TourPaymentsModel.objects.filter(order__user = request.user)
     }
     return render(request, "app_main/dashboard/order.html", context)
 
