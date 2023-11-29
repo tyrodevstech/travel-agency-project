@@ -1,4 +1,4 @@
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse, reverse_lazy
 from django.contrib import messages
 from django.views.generic import ListView, FormView
@@ -70,6 +70,18 @@ class TourPaymentsView(FormView):
     template_name = 'app_tour/payments.html'
     form_class = TourPaymentsForm
     success_url = reverse_lazy("app_main:order-list")
+
+
+    def dispatch(self, *args, **kwargs):
+        # Check if payment is already paid
+        order_id = self.kwargs.get('pk')
+        order_obj = get_object_or_404(TourOrderModel, id=order_id)
+        if hasattr(order_obj, "tourpaymentsmodel"):
+            if order_obj.tourpaymentsmodel.is_paid:
+                # Redirect to the dashboard or any other appropriate URL
+                return redirect('app_main:order-list')
+
+        return super().dispatch(*args, **kwargs)
 
 
     def form_valid(self, form):
